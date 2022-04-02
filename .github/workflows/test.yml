@@ -1,0 +1,27 @@
+name: test
+on:
+  push:
+jobs:
+  test:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest]
+        node: ["16.x"]
+    name: test/node ${{ matrix.node }}/${{ matrix.platform }}
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@master
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install
+      - run: npm run test
+      - name: run coverage
+        run: npm run coverage
+      - name: test coverage push
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: cdd9c31bd436b6269c68f8c22d529b139ac6f06c70e5e9cd7a9c76996b2490a4
+        with:
+          debug: true
+        if: ${{ github.event_name == 'push' }}
