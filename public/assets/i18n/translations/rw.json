@@ -1,0 +1,33 @@
+{
+  "error": {
+    "internet": "Oops, ikosa ryabayeho Cyangwa Ntabwo uri kumurongo"
+  },
+  "navbar": {
+    "home": "Ahabanza",
+    "About": "Abo turibo",
+    "routes": "Imihanda",
+    "contact": "Tubaze",
+    "signIn": "Injira"
+  },
+  "landingPage": {
+    "welcome_message": "OROSHYA INGENDO ZAWE NA PHANTOM",
+    "span":"Kuri",
+    "pTag1": "duha agaciro igihe cyanyu",
+    "pTag2": "Menya aho bisi ijyeze uzigame igihe cyawe"
+  },
+  "searchBox": {
+    "pTag1": "Ese Bisi ijyeze he",
+    "button": "Shaka Bisi"
+  },
+  "login":{
+    "button":"Injira",
+    "forget":"Wibagiwe umubare banga?",
+    "span":"Cg",
+    "google":"Injira na Google",
+    "new":"Mushya kuri Phantom?",
+    "register":"Iyandikishe"
+  },
+  "notifications":{
+    "notf":"Imenyekanisha"
+  }
+}

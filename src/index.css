@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+li {
+  @apply p-5 cursor-pointer;
+}
+button {
+  @apply text-white border-2 border-button-color bg-button-color
+    rounded-3xl;
+}
