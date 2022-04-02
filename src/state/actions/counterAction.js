@@ -1,4 +1,3 @@
-
 import { INCREMENT, DECREMENT, RESET } from "./actionTypes";
 
 export const incrementAction = {
