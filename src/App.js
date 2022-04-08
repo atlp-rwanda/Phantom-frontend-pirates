@@ -5,22 +5,19 @@ import LandingPage from './container/LandingPage';
 import { NotFound } from './components';
 import store from './state/store';
 
-
 const App = () => {
   return (
     <Provider store={store}>
       <div>
-          <React.StrictMode>
+        <React.StrictMode>
           <Routes>
-            <Route path='/' element = { <LandingPage /> } />
-            <Route path='/*' element = { <NotFound /> } />
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/*" element={<NotFound />} />
           </Routes>
-          </React.StrictMode>
+        </React.StrictMode>
       </div>
     </Provider>
-    
-    
-  )
-}
+  );
+};
 
-export default App
+export default App;
