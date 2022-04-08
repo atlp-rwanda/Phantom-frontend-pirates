@@ -1,7 +1,13 @@
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'button-color': '#0E7490',
+        'landingPageColor-from': '#0ACAFF',
+        'landingPageColor-to': '#050505',
+      },
+    },
   },
   plugins: [],
-}
+};
