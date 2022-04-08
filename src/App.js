@@ -1,10 +1,11 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './container/LandingPage';
 import { NotFound } from './components';
 import { store } from './app/store';
 import ViewBus from './components/ViewBus';
+import Login from './container/Login';
+import Notifications from './container/Notifications';
 
 const App = () => {
   return (

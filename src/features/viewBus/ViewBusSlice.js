@@ -19,7 +19,14 @@ const viewBusSlice = createSlice({
   reducers: {},
   extraReducers: {
     [fetchAsyncViewBus.fulfilled]: (state, { payload }) => {
+<<<<<<< HEAD
       console.log('search bus by source and destination fetched successfully');
+=======
+<<<<<<< HEAD
+=======
+      console.log('search bus by source and destination fetched successfully');
+>>>>>>> f5bd285... ft: landing-page added
+>>>>>>> 1057758... ft: add new change
       return {
         ...state,
         viewBus: payload,
