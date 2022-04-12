@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from '../images/logo.png';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 
-function Navbar() {
+function NavbarOther() {
   const [dropDownMenu, setUpDropDown] = useState(false);
   const [language, setLanguage] = useState('ENG');
 
@@ -13,14 +13,20 @@ function Navbar() {
   };
 
   return (
-    <div className="w-screen h-[90px] z-10  bg-[#000] bg-opacity-[12%] fixed drop-shadow-lg">
+    <div className="w-screen h-[90px] z-10 border-b-2 border-button-color fixed">
       <div className="pl-[10%] flex justify-between items-center w-full h-full">
         <div className="flex items-center w-full justify-between">
           <img src={logo} alt="/" className="w-36" />
           <div className="flex items-center">
             <div className="md:pr-[90px]">
-              <ul className="hidden md:flex text-white font-semibold ">
-                <li>Home</li>
+              <ul className="hidden md:flex text-button-color font-semibold ">
+                <li>
+                    <Link to='/'>
+                    <a
+                    >Home</a
+                    >
+                    </Link>
+                </li>
                 <li>About</li>
                 <li>Routes</li>
                 <li>Contact Us</li>
@@ -29,7 +35,9 @@ function Navbar() {
             <div className="hidden md:flex h-[30px] pr-[50px]">
               <button className="w-[90px] border-yellow-400 text-yellow-400 bg-transparent hover:bg-button-color hover:text-white hover:border-none">
                 <Link to='/login'>
-                  <a>Log In</a>
+                  <a
+                  >Log In</a
+                  >
                 </Link>
               </button>
               <div className="px-10">
@@ -74,4 +82,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default NavbarOther;
