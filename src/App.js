@@ -1,11 +1,15 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { ApiProvider } from '@reduxjs/toolkit/query/react';
+
 import LandingPage from './container/LandingPage';
 import { NotFound } from './components';
 import ViewBus from './components/ViewBus';
+import { phantomApi } from './services/phantomApi';
 
 const App = () => {
   return (
+    <ApiProvider api={ phantomApi }>
     <div>
       <React.StrictMode>
         <Routes>
@@ -15,6 +19,7 @@ const App = () => {
         </Routes>
       </React.StrictMode>
     </div>
+    </ApiProvider>
   );
 };
 
