@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { withTranslation } from 'react-i18next';
 
 import { useGetPhantomQuery } from '../services/phantomApi';
 import { Navbar, Spinner } from '../components';
+
+import { Testing } from '../components';
 
 const LandingPage = ({ t }) => {
 
@@ -61,4 +64,4 @@ const LandingPage = ({ t }) => {
     }
 }
 
-export default LandingPage;
+export default withTranslation() (LandingPage);
