@@ -1,4 +1,7 @@
 {
   "home": "home",
-  "login": "login"
+  "About": "About",
+  "routes": "Routes",
+  "contact": "Contact Us",
+  "signIn": "Sign In"
 }

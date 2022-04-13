@@ -1,4 +1,7 @@
 {
   "home": "homepage",
-  "login": "connexion"
+  "About": "Nous",
+  "routes": "Route",
+  "contact": "Contacte Nous",
+  "signIn": "Connexion"
 }
