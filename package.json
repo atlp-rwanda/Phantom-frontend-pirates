@@ -10,8 +10,7 @@
     "prepare": "husky install",
     "lint": "eslint . --fix --ext .js",
     "test": "jest --coverage",
-    "coverage": "npx jest --coverage",
-    "heroku-prebuild": "npm install --dev"
+    "coverage": "npx jest --coverage"
   },
   "repository": {
     "type": "git",
