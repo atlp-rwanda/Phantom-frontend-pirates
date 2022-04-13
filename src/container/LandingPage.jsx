@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useGetPhantomQuery } from '../services/phantomApi';
 import { Navbar, Spinner } from '../components';
 
+import { Testing } from '../components';
+
 const LandingPage = ({ t }) => {
 
     const { data, error, isLoading } = useGetPhantomQuery();
