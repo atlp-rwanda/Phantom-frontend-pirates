@@ -1,3 +1,7 @@
+[![Development workflow](https://github.com/atlp-rwanda/Phantom-frontend-pirates/actions/workflows/development.yml/badge.svg?branch=develop&event=push)](https://github.com/atlp-rwanda/Phantom-frontend-pirates/actions/workflows/development.yml)
+[![Maintainability](https://api.codeclimate.com/v1/badges/39bd2ae9d63d745f4b01/maintainability)](https://codeclimate.com/github/atlp-rwanda/Phantom-frontend-pirates/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/39bd2ae9d63d745f4b01/test_coverage)](https://codeclimate.com/github/atlp-rwanda/Phantom-frontend-pirates/test_coverage)
+
 # Phantom-frontend-pirates
 ## Phantom Frontend web application 
 `powered by phantom backend!`
