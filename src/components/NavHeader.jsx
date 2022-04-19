@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
 import logo from '../images/logo.png';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
+import SelectLanguage from './SelectLanguage';
 
 function NavHeader() {
   const navigate = useNavigate()
@@ -44,7 +45,7 @@ function NavHeader() {
                 <li>Contact Us</li>
               </ul>
             </div>
-            <div className="hidden md:flex h-[30px] pr-[50px]">
+            <div className="hidden md:flex h-[30px] pr-[70px]">
                 {user ? (
                   <button onClick={onLogout} className="w-[90px] border-white text-whte bg-red-700 hover:bg-button-color hover:text-white hover:border-none">
                   Log Out
@@ -57,15 +58,7 @@ function NavHeader() {
                   </>
                 )}
               <div className="px-10">
-                <select
-                  value={language}
-                  onChange={(e) => setLanguage(e.target.value)}
-                  className="bg-slate-300 opacity-[65%] font-bold"
-                >
-                  <option value="ENG">ENG</option>
-                  <option value="RW">RW</option>
-                  <option value="FR">FR</option>
-                </select>
+                <SelectLanguage />
               </div>
             </div>
           </div>
