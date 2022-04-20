@@ -84,7 +84,17 @@ function NavHeader() {
         <li className="border-b-2 border-zinc-300 w-full pl-9">Routes Us</li>
         <li className="border-b-2 border-zinc-300 w-full pl-9">Contact Us</li>
         <div className="flex my-5 mx-9">
-          <button className="h-[40px] w-full ">Sign In</button>
+          {user ? (
+                  <button onClick={onLogout} className="h-[40px] w-full  text-whte bg-red-700 hover:bg-button-color hover:text-white hover:border-none">
+                  Log Out
+                </button>
+                ) : (
+                  <>
+                    <button className="h-[40px] w-full text-yellow-400 bg-cyan-700 hover:bg-button-color hover:text-white hover:border-none">
+                      Log In
+                    </button>
+                  </>
+                )}
         </div>
       </ul>
     </div>
