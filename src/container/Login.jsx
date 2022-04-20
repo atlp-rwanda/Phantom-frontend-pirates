@@ -91,10 +91,6 @@ const Login = (props) => {
     return setValidation(errors);
 
   }
-  // if (isLoading) {
-  //   return <Spinner />
-  // }
-    
     return (
         <>
           <div className="flex items-center min-h-screen">

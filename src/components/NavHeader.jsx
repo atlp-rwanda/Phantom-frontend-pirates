@@ -52,7 +52,7 @@ function NavHeader() {
                 </button>
                 ) : (
                   <>
-                    <button className="w-[90px] border-yellow-400 text-yellow-400 bg-cyan-700 hover:bg-button-color hover:text-white hover:border-none">
+                    <button className="w-[90px] border-white text-white bg-cyan-700 hover:bg-button-color hover:text-white hover:border-none">
                       Log In
                     </button>
                   </>
