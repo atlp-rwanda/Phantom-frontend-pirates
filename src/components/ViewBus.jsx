@@ -4,7 +4,6 @@ import { getViewBus } from '../features/viewBus/ViewBusSlice';
 
 const ViewBus = () => {
   const viewBusData = useSelector(getViewBus);
-  console.log(viewBusData);
   return (
     <div>
       <h1>View Bus</h1>

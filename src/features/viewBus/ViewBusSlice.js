@@ -19,7 +19,6 @@ const viewBusSlice = createSlice({
   reducers: {},
   extraReducers: {
     [fetchAsyncViewBus.fulfilled]: (state, { payload }) => {
-      console.log('search bus by source and destination fetched successfully');
       return {
         ...state,
         viewBus: payload,
