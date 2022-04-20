@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import logo from '../images/logo.png';
+import { Link } from 'react-router-dom';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import SelectLanguage from './SelectLanguage';
 
@@ -27,7 +28,9 @@ function Navbar() {
             </div>
             <div className="hidden md:flex h-[30px] pr-[70px]">
               <button className="w-[90px] border-button-color border-fon text-white bg-transparent hover:bg-button-color hover:text-white hover:border-none">
-                Sign In
+                <Link to='/login'>
+                  <a>Log In</a>
+                </Link>
               </button>
               <div className="px-10">
                 <SelectLanguage />
