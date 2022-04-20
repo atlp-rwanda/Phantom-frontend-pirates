@@ -3,16 +3,40 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { login, reset } from '../features/auth/authSlice'
-import { NavHeader, Spinner } from '../components/index';
+import { NavHeader } from '../components/index';
+import IconButton from "@mui/material/IconButton/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import InputAdornment from "@mui/material/InputAdornment";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Input from "@mui/material/Input";
+import { SpinnerCircular } from 'spinners-react';
 
-function Login() {
+const Login = (props) => {
 
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  })
+  const [values, setValues] = React.useState({
+    email: "",
+    password: "",
+    showPasswordd: false,
+  });
+  
+  const [validation, setValidation] = React.useState({
+    email: "",
+    password: ""
+  });
 
-  const { email, password } = formData
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPasswordd: !values.showPasswordd });
+  };
+  
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const { email, password } = values
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -30,29 +54,46 @@ function Login() {
       navigate('/notification')
     }
 
-    dispatch(reset())
+    //dispatch(reset())
   }, [user, isError, isSuccess, message, navigate, dispatch])
 
-  const onChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }))
-  }
 
   const onSubmit = (e) => {
     e.preventDefault()
+
+    let errors = validation;
+    
+    //email
+    const emailCond =/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if (!values.email.trim()) {
+      errors.email = 'Email is required';
+    } else if (!values.email.match(emailCond)) {
+      errors.email = 'Please enter a valid email address';
+    } else {
+      errors.email = '';
+    }
+    //password validation
+    const password = values.password;
+    if (!password) {
+      errors.password = 'password is required';
+    } else if (password.length < 6) {
+      errors.password = 'Password must be longer than 5 characters';
+    }else {
+      errors.password = '';
+    }
 
     const userData = {
       email,
       password,
     }
-
     dispatch(login(userData))
+      
+    return setValidation(errors);
+
   }
-  if (isLoading) {
-    return <Spinner />
-  }
+  // if (isLoading) {
+  //   return <Spinner />
+  // }
     
     return (
         <>
@@ -77,7 +118,9 @@ function Login() {
                         </h1>
                         <form onSubmit={onSubmit}>
                             <div className="bg-red-100 rounded-lg mb-4 text-base text-red-700 mb-3">
-                                
+                                {message && 
+                                <h5 className='p-2'>{message}</h5>
+                                }
                             </div>
                             <div className="flex rounded-md shadow-sm mt-8 mb-6">
                                 <p className="h-6 w-6 mr-1 md:text-white">
@@ -86,16 +129,17 @@ function Login() {
                                 </svg>
                                 </p>
                                 <input
-                                    type='email'
-                                    className='w-full border-b-4 bg-transparent outline-none placeholder:bold focus:outline-none md:text-white'
+                                    type='text'
+                                    className='w-full border-b-4 bg-transparent placeholder-gray-700  outline-none focus:outline-none md:text-white'
                                     id='email'
                                     name='email'
-                                    value={email}
-                                    placeholder='Enter your email'
-                                    onChange={onChange}
+                                    value={values.email}
+                                    placeholder='Enter your email' required
+                                    onChange={handleChange("email")}
                                 />
                             </div>
-                            <div>
+                            <div className="bg-red-100 rounded-lg text-base text-red-700 mb-3 mt-3">
+                                <span className=''>{validation.email && <p className='p-2'>{validation.email}</p>}</span>
                             </div>
                             <div className="flex rounded-md shadow-sm">
                                 <p className="h-6 w-6 mr-1 md:text-white">
@@ -103,35 +147,40 @@ function Login() {
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                      </svg>
                                 </p>
-                                <input
-                                    type='password'
-                                    className='w-full border-b-4 bg-transparent outline-none placeholder:bold md:text-white'
-                                    id='password'
-                                    name='password'
-                                    value={password}
-                                    placeholder='Enter password'
-                                    onChange={onChange}
+                                <Input 
+                                  className='w-full border-b-4 bg-transparent outline-none placeholder-gray-700 focus:outline-none md:text-white'
+                                  type={values.showPasswordd ? "text" : "password"}
+                                  onChange={handleChange("password")}
+                                  placeholder='Enter your password'
+                                  value={values.password} required 
+                                  endAdornment={
+                                    <InputAdornment position="end">
+                                      <IconButton
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                      >
+                                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                      </IconButton>
+                                    </InputAdornment>
+                                  }
                                 />
-                                <div className="flex -mr-px">
-                                    <span
-                                        className="flex items-center leading-normal bg-transparent rounded rounded-l-none border-b-4 border-0 px-3 whitespace-no-wrap md:text-white"
-                                        >
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
-                                        </svg>
-                                    </span>    
-                                </div>
                             </div>
-                            <div>
-
+                            <div className="bg-red-100 rounded-lg text-base text-red-700 mt-3">
+                                <span className=''>{validation.password && <p className='p-2'>{validation.password}</p>}</span>
                             </div>
 
                             <div className="flex flex-col-reverse md:flex-row items-baseline md:justify-between">
-                                <div className='w-full md:w-auto'>
+                                <div>
+                                  {isLoading ? (
+                                    <div className='mt-4'>
+                                      <SpinnerCircular />
+                                    </div>
+                                  ): (
                                     <button type='submit' className='px-6 py-2 mt-4 text-white md:text-cyan-600 w-full bg-indigo-500 
                                       md:w-auto md:bg-white rounded-lg hover:bg-cyan-800'>
                                         Login
                                     </button>
+                                  )}
                                 </div>
                                 <div className='w-full md:w-auto'>
                                     <a href="#" className="text-sm text-indigo-500 mt-3 md:text-white float-right justify-end hover:underline">Forgot password?</a>
