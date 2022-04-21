@@ -11,15 +11,15 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Input from "@mui/material/Input";
 import { SpinnerCircular } from 'spinners-react';
 
-const Login = (props) => {
+const Login = () => {
 
-  const [values, setValues] = React.useState({
+  const [values, setValues] = useState({
     email: "",
     password: "",
     showPasswordd: false,
   });
   
-  const [validation, setValidation] = React.useState({
+  const [validation, setValidation] = useState({
     email: "",
     password: ""
   });
@@ -30,10 +30,6 @@ const Login = (props) => {
   
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
-  };
-  
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
   };
 
   const { email, password } = values
@@ -53,10 +49,12 @@ const Login = (props) => {
     if (isSuccess || user) {
       navigate('/notification')
     }
-
-    //dispatch(reset())
   }, [user, isError, isSuccess, message, navigate, dispatch])
 
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+    dispatch(reset())
+  };
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -81,6 +79,7 @@ const Login = (props) => {
     }else {
       errors.password = '';
     }
+
 
     const userData = {
       email,
