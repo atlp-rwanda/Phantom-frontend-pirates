@@ -1,0 +1,39 @@
+{
+    "error": {
+      "internet": "Oops, an error occured Or You are not Online"
+    },
+    "navbar": {
+      "home": "Home",
+      "About": "About",
+      "routes": "Routes",
+      "contact": "Contact Us",
+      "signIn": "Sign In",
+      "signOut":"Log Out"
+    },
+    "landingPage": {
+      "welcome_message": "MAKE YOUR TRANSPORT EASIER WITH PHANTOM",
+      "span":"At",
+      "pTag1": "we value your time.",
+      "pTag2": "Track how far is your bus and save you Time."
+    },
+    "searchBox": {
+      "pTag1": "How far is the bus",
+      "button": "Find Bus"
+    },
+    "login":{
+      "button":"Login",
+      "forget":"Forgot password?",
+      "span":"OR",
+      "google":"Login with Google",
+      "new":"New to Phantom?",
+      "register":"Register"
+    },
+    "notifications":{
+      "notf":"Notifications"
+    },
+    "notFound":{
+      "span":"This page does not exist.",
+      "p":"But dont worry, you can find plenty of other things on our homepage.",
+      "link":"Go home"
+    }
+  } 

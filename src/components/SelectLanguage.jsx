@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { withTranslation } from 'react-i18next';
 
 function SelectLanguage() {
   const [language, setLanguage] = useState('en');
-  const onSelect = (e) => {
-    e.preventDefault();
-    setLanguage(e.target.value);
-  };
+  
+  useEffect(() => {
+    //set language in localstorage
+    localStorage.setItem('language', language);
+
+ }, [language])
+
+ const currentLang = localStorage.getItem('language');
+
+ const changeLang = (e) => {
+   setLanguage(e.target.value);
+   window.location.reload();
+}
+
   return (
     <select
-      value={language}
-      onChange={(e) => onSelect(e)}
+    value={currentLang}
+    onChange={(e) => changeLang(e)}
       className="bg-black bg-opacity-[0%] font-bold focus:outline-none hover:cursor-pointer text-xl"
     >
       <option
@@ -34,4 +45,4 @@ function SelectLanguage() {
   );
 }
 
-export default SelectLanguage;
+export default withTranslation()(SelectLanguage);
