@@ -208,4 +208,8 @@ const Login = ({t}) => {
         </> 
     );
 }
+<<<<<<< HEAD
 export default withTranslation()(Login);
+=======
+export default withTranslation()(Login);
+>>>>>>> login to phantom
