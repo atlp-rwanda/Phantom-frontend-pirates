@@ -56,16 +56,28 @@
   "dependencies": {
     "@heroicons/react": "^1.0.6",
     "@babel/runtime": "^7.17.9",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.6.2",
+    "@mui/material": "^5.6.2",
     "@reduxjs/toolkit": "^1.8.1",
     "axios": "^0.26.1",
     "dotenv": "^16.0.0",
+    "i18next": "^21.6.14",
+    "i18next-browser-languagedetector": "^6.1.4",
+    "i18next-http-backend": "^1.4.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-i18next": "^11.16.2",
+    "react-loader-spinner": "^6.0.0-0",
     "react-redux": "^7.2.8",
     "react-router-dom": "^6.3.0",
+    "react-toastify": "^8.2.0",
     "redux": "^4.1.2",
     "redux-persist": "^6.0.0",
-    "redux-thunk": "^2.4.1"
+    "redux-thunk": "^2.4.1",
+    "spinners-react": "^1.0.7",
+    "universal-cookie": "^4.0.4"
   },
   "bugs": {
     "url": "https://github.com/atlp-rwanda/Phantom-frontend-pirates/issues"

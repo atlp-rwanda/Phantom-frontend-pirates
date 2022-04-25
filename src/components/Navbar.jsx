@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { withTranslation } from 'react-i18next';
+
 import logo from '../images/logo.png';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import SelectLanguage from './SelectLanguage';
+import { Link } from 'react-router-dom';
 
-function Navbar() {
+const Navbar = ({ t, data}) => {
   const [dropDownMenu, setUpDropDown] = useState(false);
 
   const handleClick = (e) => {
@@ -19,18 +22,20 @@ function Navbar() {
           <div className="md:flex items-center">
             <div className="md:pr-[50px]">
               <ul className="hidden md:flex text-white font-semibold ">
-                <li>Home</li>
-                <li>About</li>
-                <li>Routes</li>
-                <li className="whitespace-nowrap">Contact Us</li>
+                <li>{t('home')}</li>
+                <li>{t('About')}</li>
+                <li>{t('routes')}</li>
+                <li className="whitespace-nowrap">{t('contact')}</li>
               </ul>
             </div>
             <div className="hidden md:flex h-[30px] pr-[70px]">
               <button className="w-[90px] border-button-color border-fon text-white bg-transparent hover:bg-button-color hover:text-white hover:border-none">
-                Sign In
+                <Link to='/login'>
+                  <a>Log In</a>
+                </Link>
               </button>
               <div className="px-10">
-                <SelectLanguage />
+                <SelectLanguage data = {data} />
               </div>
             </div>
           </div>
@@ -57,7 +62,7 @@ function Navbar() {
         <li className="border-b-2 border-zinc-300 w-full pl-9">Contact Us</li>
         <div>
           <div className="px-10 pt-8">
-            <SelectLanguage />
+           {/*  <SelectLanguage /> */}
           </div>
         </div>
         <div className="flex my-5 mx-9">
@@ -70,4 +75,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default withTranslation()(Navbar);
