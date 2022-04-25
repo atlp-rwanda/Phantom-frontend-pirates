@@ -3,21 +3,16 @@ import { withTranslation } from 'react-i18next';
 
 const SelectLanguage = ({ t, data }) => {
   const [language, setLanguage] = useState('en');
-  //set language in localstorage
-  localStorage.setItem('language', language);
+ 
+ 
  
   useEffect(() => {
-    
-    console.log(language);
-    console.log(data);
+     //set language in localstorage
+     localStorage.setItem('language', language);
     
   }, [language])
 
-  /* const onSelect = (e) => {
-    e.preventDefault();
-    setLanguage(e.target.value);
-    window.location.reload();
-  }; */
+  const currentLang = localStorage.getItem('language');
 
   const changeLang = (e) => {
     setLanguage(e.target.value);
@@ -27,7 +22,7 @@ const SelectLanguage = ({ t, data }) => {
 
   return (
     <select
-      value={language}
+      value={currentLang}
       onChange={(e) => changeLang(e)}
       className="bg-black bg-opacity-[0%] font-bold focus:outline-none hover:cursor-pointer text-xl"
     >

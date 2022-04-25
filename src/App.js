@@ -6,6 +6,8 @@ import ViewBus from './components/ViewBus';
 import Login from './container/Login';
 import Notifications from './container/Notifications';
 import { useTranslation } from 'react-i18next';
+import { phantomApi } from './services/phantomApi';
+import { ApiProvider } from '@reduxjs/toolkit/dist/query/react';
 
 
 const App = () => {

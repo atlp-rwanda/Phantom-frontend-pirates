@@ -22,16 +22,16 @@ const Navbar = ({ t, data}) => {
           <div className="md:flex items-center">
             <div className="md:pr-[50px]">
               <ul className="hidden md:flex text-white font-semibold ">
-                <li>{t('home')}</li>
-                <li>{t('About')}</li>
-                <li>{t('routes')}</li>
-                <li className="whitespace-nowrap">{t('contact')}</li>
+                <li>{t('navbar.home')}</li>
+                <li>{t('navbar.About')}</li>
+                <li>{t('navbar.routes')}</li>
+                <li className="whitespace-nowrap">{t('navbar.contact')}</li>
               </ul>
             </div>
             <div className="hidden md:flex h-[30px] pr-[70px]">
               <button className="w-[90px] border-button-color border-fon text-white bg-transparent hover:bg-button-color hover:text-white hover:border-none">
                 <Link to='/login'>
-                  <a>Log In</a>
+                  <a>{t('navbar.signIn')}</a>
                 </Link>
               </button>
               <div className="px-10">
@@ -56,13 +56,13 @@ const Navbar = ({ t, data}) => {
             : 'absolute md:hidden w-full text-white font-bold bg-[#000000] bg-opacity-[50%]'
         }
       >
-        <li className="border-y-2 border-zinc-300 w-full pl-9">Home</li>
-        <li className="border-b-2 border-zinc-300 w-full pl-9">About</li>
-        <li className="border-b-2 border-zinc-300 w-full pl-9">Routes</li>
-        <li className="border-b-2 border-zinc-300 w-full pl-9">Contact Us</li>
+        <li className="border-y-2 border-zinc-300 w-full pl-9">{t('navbar.home')}</li>
+        <li className="border-b-2 border-zinc-300 w-full pl-9">{t('navbar.About')}</li>
+        <li className="border-b-2 border-zinc-300 w-full pl-9">{t('navbar.routes')}</li>
+        <li className="border-b-2 border-zinc-300 w-full pl-9">{t('navbar.contact')}</li>
         <div>
           <div className="px-10 pt-8">
-           {/*  <SelectLanguage /> */}
+            <SelectLanguage />
           </div>
         </div>
         <div className="flex my-5 mx-9">
