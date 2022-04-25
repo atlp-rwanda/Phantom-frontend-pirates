@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { withTranslation } from 'react-i18next';
 
-const SelectLanguage = ({ t, data }) => {
+const SelectLanguage = ({ t }) => {
   const [language, setLanguage] = useState('en');
   //set language in localstorage
   localStorage.setItem('language', language);
@@ -9,7 +9,6 @@ const SelectLanguage = ({ t, data }) => {
   useEffect(() => {
     
     console.log(language);
-    console.log(data);
     
   }, [language])
 

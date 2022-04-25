@@ -1,11 +1,12 @@
 import React,{ Suspense} from "react";
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
 import { store } from './app/store';
+import { Provider } from 'react-redux';
 
 import App from './App';
 import './index.css';
+import './i18n';
 
 ReactDOM.render (
 <Router>
