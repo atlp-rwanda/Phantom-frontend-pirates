@@ -5,14 +5,6 @@ import { phantomApi } from '../services/phantomApi';
 export const store = configureStore({
   reducer: {
     viewSearchedBuses: viewBusReducer,
+    [phantomApi.reducerPath]: phantomApi.reducer,
   },
 });
-
-import { phantomApi } from '../services/phantomApi';
-
-export default configureStore({
-    reducer: {
-        [phantomApi.reducerPath]: phantomApi.reducer,
-    },
-
-})

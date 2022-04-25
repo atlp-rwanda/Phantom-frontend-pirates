@@ -16,7 +16,7 @@ const LandingPage = ({ t }) => {
     return <Spinner message='We are fetching your request' />
   }
   if (error) {
-    return <h1>Oops, an error occured Or You are not Online</h1>;
+    return <h1>{t('error.internet')}</h1>;
   }
   if (data)
     return (
@@ -30,19 +30,18 @@ const LandingPage = ({ t }) => {
         <div className="max-w-[1240px] mx-auto text-black relative">
           <div className="py-24 md:px-[7%] px-[10%] md:py-44">
             <h1 className="font-bold text-white text-2xl sm:text-4xl md:text-5xl">
-              MAKE YOUR TRANSPORT EASIER WITH PHANTOM
+              {t('landingPage.welcome_message')}
             </h1>
             <p className="pt-8 text-xl font-medium md:text-4xl sm:text-3xl text-white">
-              At <span className="text-yellow-400">PHANTOM</span> we value your
-              time.
+              {t('landingPage.span')} <span className="text-yellow-400">PHANTOM</span> {t('landingPage.pTag1')}
             </p>
             <p className="text-xxl font-medium md:text-4xl sm:text-3xl text-white">
-              Track how far is your bus and save you Time.
+            {t('landingPage.pTag2')}
             </p>
           </div>
         </div>
         <div className="flex justify-center">
-          {/* <SearchBox /> */}
+          <SearchBox />
         </div>
       </div>
     );
