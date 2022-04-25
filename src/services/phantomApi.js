@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const currentLang = localStorage?.getItem('language') || 'en';
-
+const currentLang = localStorage.getItem('language')
 const phantomApiHeaders = {
   'content-type': 'application/json',
   'Connection': 'keep-alive',

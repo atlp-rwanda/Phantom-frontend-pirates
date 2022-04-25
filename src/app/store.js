@@ -8,8 +8,11 @@ export const store = configureStore({
   },
 });
 
+import { phantomApi } from '../services/phantomApi';
+
 export default configureStore({
     reducer: {
         [phantomApi.reducerPath]: phantomApi.reducer,
     },
+
 })
