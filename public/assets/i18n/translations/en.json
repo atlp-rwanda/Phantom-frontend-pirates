@@ -3,7 +3,11 @@
     "internet": "Oops, an error occured Or You are not Online"
   },
   "navbar": {
+<<<<<<< HEAD
     "home": "Home",
+=======
+    "home": "home",
+>>>>>>> f1778d604edab7572e31c59098495146d9aac4ac
     "About": "About",
     "routes": "Routes",
     "contact": "Contact Us",
@@ -18,6 +22,7 @@
   "searchBox": {
     "pTag1": "How far is the bus",
     "button": "Find Bus"
+<<<<<<< HEAD
   },
   "login":{
     "button":"Login",
@@ -29,5 +34,7 @@
   },
   "notifications":{
     "notf":"Notifications"
+=======
+>>>>>>> f1778d604edab7572e31c59098495146d9aac4ac
   }
 }

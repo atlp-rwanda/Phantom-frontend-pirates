@@ -1,5 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { ApiProvider } from '@reduxjs/toolkit/query/react';
+
 import LandingPage from './container/LandingPage';
 import { NotFound } from './components';
 import ViewBus from './components/ViewBus';
@@ -11,7 +13,6 @@ import { ApiProvider } from '@reduxjs/toolkit/dist/query/react';
 
 
 const App = () => {
-  const { t } = useTranslation();
 
   return (
     <ApiProvider api={ phantomApi }>
