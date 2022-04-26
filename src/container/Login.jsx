@@ -12,6 +12,8 @@ import Input from "@mui/material/Input";
 import { SpinnerCircular } from 'spinners-react';
 import { withTranslation } from 'react-i18next'
 
+import { Navbar } from '../components';
+
 const Login = ({ t }) => {
 
   const [values, setValues] = useState({
@@ -96,7 +98,7 @@ const Login = ({ t }) => {
           <div className="flex items-center min-h-screen">
             <div
                 className="h-full absolute">
-                <NavHeader />
+                <Navbar />
             </div>
             <div className="flex-1 h-full max-w-6xl mx-auto rounded-lg">
                 <div className="flex flex-col md:flex-row">

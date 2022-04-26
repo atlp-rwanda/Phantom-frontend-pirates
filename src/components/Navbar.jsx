@@ -6,7 +6,7 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import SelectLanguage from './SelectLanguage';
 import { Link } from 'react-router-dom';
 
-const Navbar = ({ t, data}) => {
+const Navbar = ({ t }) => {
   const [dropDownMenu, setUpDropDown] = useState(false);
 
   const handleClick = (e) => {
@@ -35,7 +35,7 @@ const Navbar = ({ t, data}) => {
                 </Link>
               </button>
               <div className="px-10">
-                <SelectLanguage data = {data} />
+                <SelectLanguage />
               </div>
             </div>
           </div>
@@ -67,7 +67,7 @@ const Navbar = ({ t, data}) => {
         </div>
         <div className="flex my-5 mx-9">
           <button className="h-[40px] w-full hover:bg-opacity-75">
-            Sign In
+          {t('navbar.signIn')}
           </button>
         </div>
       </ul>

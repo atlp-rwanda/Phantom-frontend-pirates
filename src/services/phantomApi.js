@@ -16,7 +16,6 @@ export const phantomApi = createApi({
   endpoints: (builder) => ({
     getPhantom: builder.query({
       query: () => createRequest()
-
     }),
   })
 });

@@ -1,9 +1,7 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAsyncViewBus } from '../features/viewBus/ViewBusSlice';
 import { getViewBus } from '../features/viewBus/ViewBusSlice';
-import ViewBus from './ViewBus';
 import { useNavigate } from 'react-router-dom';
 import FindBUsButtonSpinner from './FindBUsButtonSpinner';
 import { withTranslation } from 'react-i18next';
@@ -17,13 +15,8 @@ const SearchBox = ({ t }) => {
   const viewBusData = useSelector(getViewBus);
   const navigate = useNavigate();
 
-  viewBusData.routeobject ? (
-    viewBusData.routeobject.map(
-      (bus, index) => (
-        (<ViewBus key={index} data={bus} />), navigate('/viewBus')
-      )
-    )
-  ) : (
+  viewBusData.routeobject ? ( navigate('/viewBus')
+      ) : (
     <div>
       <h3>{viewBusData.Error}</h3>
     </div>
