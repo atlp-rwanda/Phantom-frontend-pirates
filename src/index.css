@@ -9,3 +9,14 @@ button {
   @apply text-white border-2 border-button-color bg-button-color
     rounded-3xl;
 }
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus{
+  -webkit-text-fill-color: rgb(16, 15, 15);
+  -webkit-box-shadow: 0 0 0px 1000px hsl(210, 75%, 79%) inset;
+  box-shadow: 0 0 0px 1000px hsla(24, 3%, 66%, 0.074) inset;
+  transition: background-color 5000s ease-in-out 0s;
+  color: rgba(108, 105, 105, 0.326);
+}
+

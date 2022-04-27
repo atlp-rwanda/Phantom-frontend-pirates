@@ -1,187 +1,175 @@
-// import React from 'react'
-// import 'regenerator-runtime/runtime'
-// import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-// import routeService from './routeService'
-
-// const initialState = {
-//   routes: [],
-//   isError: false,
-//   isSuccess: false,
-//   isLoading: false,
-//   message: '',
-// }
-
-// // Create new route
-// export const createRoute = createAsyncThunk(
-//   'routes/create',
-//   async (routeData, thunkAPI) => {
-//     try {
-//       return await routeService.createRoute(routeData)
-//     } catch (error) {
-//       const message =
-//         (error.response &&
-//           error.response.data &&
-//           error.response.data.message) ||
-//         error.message ||
-//         error.toString()
-//       return thunkAPI.rejectWithValue(message)
-//     }
-//   }
-// )
-
-// // Get route
-// export const getRoutes = createAsyncThunk(
-//   'routes/getAll',
-//   async () => {
-//     try {
-//       return await routeService.getRoutes()
-//     } catch (error) {
-//       const message =
-//         (error.response &&
-//           error.response.data &&
-//           error.response.data.message) ||
-//         error.message ||
-//         error.toString()
-//       return thunkAPI.rejectWithValue(message)
-//     }
-//   }
-// )
-
-// // Delete user goal
-// export const deleteRoute = createAsyncThunk(
-//   'routes/delete',
-//   async (id, thunkAPI) => {
-//     try {
-//       return await routeService.deleteRoute(id)
-//     } catch (error) {
-//       const message =
-//         (error.response &&
-//           error.response.data &&
-//           error.response.data.message) ||
-//         error.message ||
-//         error.toString()
-//       return thunkAPI.rejectWithValue(message)
-//     }
-//   }
-// )
-
-// export const routeSlice = createSlice({
-//   name: 'route',
-//   initialState,
-//   reducers: {
-//     reset: (state) => initialState,
-//   },
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(createRoute.pending, (state) => {
-//         state.isLoading = true
-//       })
-//       .addCase(createRoute.fulfilled, (state, action) => {
-//         state.isLoading = false
-//         state.isSuccess = true
-//         state.routes.push(action.payload)
-//       })
-//       .addCase(createRoute.rejected, (state, action) => {
-//         state.isLoading = false
-//         state.isError = true
-//         state.message = action.payload
-//       })
-//       .addCase(getRoutes.pending, (state) => {
-//         state.isLoading = true
-//       })
-//       .addCase(getRoutes.fulfilled, (state, action) => {
-//         state.isLoading = false
-//         state.isSuccess = true
-//         state.routes = action.payload
-//       })
-//       .addCase(getRoutes.rejected, (state, action) => {
-//         state.isLoading = false
-//         state.isError = true
-//         state.message = action.payload
-//       })
-//       .addCase(deleteRoute.pending, (state) => {
-//         state.isLoading = true
-//       })
-//       .addCase(deleteRoute.fulfilled, (state, action) => {
-//         state.isLoading = false
-//         state.isSuccess = true
-//         state.routes = state.routes.filter(
-//           (route) => route._id !== action.payload.id
-//         )
-//       })
-//       .addCase(deleteRoute.rejected, (state, action) => {
-//         state.isLoading = false
-//         state.isError = true
-//         state.message = action.payload
-//       })
-//   },
-// })
-
-// export const { reset } = routeSlice.actions
-// export default routeSlice.reducer
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import phantomApi from '../../api/api';
-
+const token = localStorage.getItem('jwt');
+const Authorization = `Bearer ${token}`;
 
 // Create new route
 export const createRoute = createAsyncThunk(
   'routes/createRoute',
   async (routeData, thunkAPI) => {
     try {
-      console.log(routeData);
-      const response = await phantomApi.post('api/routes', routeData);
+      const response = await phantomApi.post('api/routes', routeData,{
+              headers: {'Access-Control-Allow-Origin': process.env.REACT_APP_BACKEND_URL, 'Content-Type': 'application/json',
+              Authorization
+            }});
       return response.data;
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString()
-      return thunkAPI.rejectWithValue(message)
+      let message;
+      if (error?.response?.data) {
+        message = error?.response?.data?.message;
+      } else {
+        message = error.message;
+      }
+      return thunkAPI.rejectWithValue(message);
     }
   }
-)
+);
+
 
 export const fetchAsyncRoutes = createAsyncThunk(
   'routes/fetchAsyncRoutes',
-  async (dispatch, getState) => {
+  async () => {
     const response = await phantomApi.get('api/routes');
     return response.data;
   }
 );
+//update
+export const updateRoute = createAsyncThunk(
+  'routes/updateRoute',
+  async (routeData, thunkAPI) => {
+    const id = routeData.id;
+    try {
+      const response = await phantomApi.put('api/routes/'+id, routeData,{
+        headers: {'Access-Control-Allow-Origin': process.env.REACT_APP_BACKEND_URL, 'Content-Type': 'application/json',
+        Authorization
+      }});
+      return response.data;
+    } catch (error) {
+      let message;
+      if (error?.response?.data) {
+        message = error?.response?.data?.message;
+      } else {
+        message = error.message;
+      }
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+//delete
+export const deleteRoute = createAsyncThunk(
+  'routes/deleteRoute',
+  async (routeData, thunkAPI) => {
+    const {routeId} = routeData
+    try{
+    const response = await phantomApi.delete('api/routes/'+routeId,{
+      headers: {'Access-Control-Allow-Origin': process.env.REACT_APP_BACKEND_URL, 'Content-Type': 'application/json',
+      Authorization
+    }});
+    return response.data;
+  }catch (error) {
+    let message;
+    if (error?.response?.data) {
+      message = error?.response?.data?.message;
+    } else {
+      message = error.message;
+    }
+    return thunkAPI.rejectWithValue(message);
+  }
+}
+);
 
 const routeSlice = createSlice({
   name: 'routes',
-  initialState: {
+  initialState : {
     routes: [],
     status: null,
+    isLoading: false,
+    isRejected: false,
+    isSuccess: false,
+    isDelLoading: false,
+    isSuccessDelete: false,
+    message: '',
+  },
+  reducers: {
+    reset: (state) => {
+      state.isLoading = false
+      state.isSuccess = false
+      state.isRejected = false
+      state.message = ''
+    },
   },
   extraReducers: {
     [createRoute.pending]: (state, action) => {
       state.status = 'loading';
+      state.isLoading = true;
     },
-    [createRoute.fulfilled]: (state, action ) => {
+    [createRoute.fulfilled]: (state, action) => {
       state.status = 'success';
-      state.routes.push(action.payload);
+      state.isSuccess = true
+      state.isLoading = false;
+      state.message = action.payload;
+      state.routes = action.payload;
     },
     [createRoute.rejected]: (state, action) => {
       state.status = 'failed';
+      state.isLoading=false;
+      state.isRejected = true;
+      state.message = action.payload;
+    },
+    [updateRoute.pending]: (state, action) => {
+      state.status = 'loading';
+      state.isLoading = true;
+    },
+    [updateRoute.fulfilled]: (state, action) => {
+      state.status = 'success';
+      state.isSuccess = true;
+      state.isLoading = false;
+      state.message = action.payload;
+      state.routes = action.payload;
+    },
+    [updateRoute.rejected]: (state, action) => {
+      state.status = 'failed';
+      state.isLoading=false;
+      state.isRejected = true;
+      state.message = action.payload;
     },
     [fetchAsyncRoutes.pending]: (state, action) => {
-      state.status = 'loading';
+      //state.status = 'loading';
+      state.isLoading = true;
     },
     [fetchAsyncRoutes.fulfilled]: (state, { payload }) => {
-      state.status = 'success';
+      //state.status = 'success';
+      state.isLoading = false;
       state.routes = payload;
     },
     [fetchAsyncRoutes.rejected]: (state, action) => {
+      //state.status = 'failed';
+      state.isLoading = false;
+    },
+    [deleteRoute.pending]: (state) => {
+      state.status = 'loading';
+      state.isDelLoading = true;
+    },
+    [deleteRoute.fulfilled]: (state, action) => {
+      state.status = 'success';
+      state.isSuccessDelete = true;
+      state.isDelLoading = false;
+      state.message = action.payload;
+      state.routes = action.payload.id;
+    },
+    [deleteRoute.rejected]: (state, action) => {
       state.status = 'failed';
+      state.isDelLoading = false;
+      state.isSuccessDelete = false;
+      state.isRejected= true;
+      state.message = action.payload;
     },
   },
 });
 
+export const { reset } = routeSlice.actions;
 export const createRoutes = (state) => state.routes;
 export const getRoutes = (state) => state.routes;
+export const updateRoutes = (state) => state.routes;
+export const deleteRoutes = (state) => state.routes;
 export default routeSlice.reducer;

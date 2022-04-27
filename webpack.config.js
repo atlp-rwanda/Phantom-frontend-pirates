@@ -44,7 +44,7 @@ module.exports = {
       filename: "[name].css",
       chunkFilename: "[id].css",
     }),
-    new Dotenv(),
+    new Dotenv()
   ],
   resolve: {
     extensions: ["", ".js", ".jsx"],

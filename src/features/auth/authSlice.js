@@ -97,5 +97,5 @@ export const register = createAsyncThunk(
     }
 })
 
-export const { reset } = authSlice.actions;
+export const { reset } = authSlice.actions
 export default authSlice.reducer
