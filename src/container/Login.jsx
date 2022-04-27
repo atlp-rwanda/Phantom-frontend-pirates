@@ -10,8 +10,9 @@ import InputAdornment from "@mui/material/InputAdornment";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Input from "@mui/material/Input";
 import { SpinnerCircular } from 'spinners-react';
+import { withTranslation } from 'react-i18next';
 
-const Login = () => {
+const Login = ({t}) => {
 
   const [values, setValues] = useState({
     email: "",
@@ -109,7 +110,7 @@ const Login = () => {
                             
                         </div>
                         <h1 className="mb-4 text-4xl md:text-white font-bold text-start">
-                            Login
+                        {t('login.button')}
                         </h1>
                         <form onSubmit={onSubmit}>
                             <div className="bg-red-100 rounded-lg mb-4 text-base text-red-700 mb-3">
@@ -173,17 +174,17 @@ const Login = () => {
                                   ): (
                                     <button type='submit' className='px-6 py-2 mt-4 text-white md:text-cyan-600 w-full bg-indigo-500 
                                       md:w-auto md:bg-white rounded-lg hover:bg-cyan-800'>
-                                        Login
+                                        {t('login.button')}
                                     </button>
                                   )}
                                 </div>
                                 <div className='w-full md:w-auto'>
-                                    <a href="#" className="text-sm text-indigo-500 mt-3 md:text-white float-right justify-end hover:underline">Forgot password?</a>
+                                    <a href="#" className="text-sm text-indigo-500 mt-3 md:text-white float-right justify-end hover:underline">{t('login.forget')}</a>
                                 </div>
                             </div>
                         </form>
                             <div className="flex justify-between items-center md:mt-14">
-                              <hr className="w-full"/> <span className="p-2 text-lg font-medium md:text-white mb-1">OR</span>
+                              <hr className="w-full"/> <span className="p-2 text-lg font-medium md:text-white mb-1">{t('login.span')}</span>
                               <hr className="w-full"/>
                             </div>
                             <button aria-label="Login with Google" role="button" className="focus:outline-none  focus:ring-2 focus:ring-offset-1
@@ -192,12 +193,12 @@ const Login = () => {
                                    <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sign_in-svg2.svg" alt="google"/>
                                  </div>
                                 <div className='w-3/5'>
-                                <p className="text-lg font-medium ml-4 md:text-gray-700">Login with Google</p>
+                                <p className="text-lg font-medium ml-4 md:text-gray-700">{t('login.google')}</p>
                                 </div>
                             </button>
                             <div className="flex items-baseline justify-center mt-6">
-                                <p className='md:text-white mr-2'>New to Phantom?</p>
-                                   <a href="#" className="text-sm  text-cyan-700 md:text-black hover:underline mr-1">Register</a>
+                                <p className='md:text-white mr-2'>{t('login.new')}</p>
+                                   <a href="#" className="text-sm  text-cyan-700 md:text-black hover:underline mr-1">{t('login.register')}</a>
                             </div>
                         </div>
                     </div>
@@ -207,4 +208,4 @@ const Login = () => {
         </> 
     );
 }
-export default Login
+export default withTranslation()(Login);
