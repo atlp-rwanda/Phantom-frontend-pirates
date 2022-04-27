@@ -96,7 +96,7 @@ const Login = ({t}) => {
           <div className="flex items-center min-h-screen">
             <div
                 className="h-full absolute">
-                <NavHeader />
+                <Navbar />
             </div>
             <div className="flex-1 h-full max-w-6xl mx-auto rounded-lg">
                 <div className="flex flex-col md:flex-row">
