@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL: 'http://phantom-api-pirates.herokuapp.com/',
+  baseURL: process.env.REACT_APP_BACKEND_URL,
 });
