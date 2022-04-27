@@ -10,7 +10,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Input from "@mui/material/Input";
 import { SpinnerCircular } from 'spinners-react';
-
+import { Navbar } from '../components';
 const Login = () => {
 
   const [values, setValues] = useState({
@@ -95,7 +95,7 @@ const Login = () => {
           <div className="flex items-center min-h-screen">
             <div
                 className="h-full absolute">
-                <NavHeader />
+                <Navbar />
             </div>
             <div className="flex-1 h-full max-w-6xl mx-auto rounded-lg">
                 <div className="flex flex-col md:flex-row">
