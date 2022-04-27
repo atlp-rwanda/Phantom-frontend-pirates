@@ -12,7 +12,6 @@ function SlideBar() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { user } = useSelector((state) => state.auth)
-
   const onLogout = () => {
     dispatch(logout())
     dispatch(reset())
@@ -40,7 +39,9 @@ function SlideBar() {
                 </button>
                 <button className="focus:outline-none flex jusitfy-start hover:text-white bg-white border-none hover:bg-cyan-700 text-gray-600 rounded py-3 pl-4  items-center w-full  space-x-6">
                 <img src={bus} alt="/" className="w-8" />
-                  <p className="text-base leading-4 ">Buses</p>
+                <p className="text-base leading-4  ">
+                    <Link to="/bus">Buses</Link>
+                  </p>
                 </button>
                 <button className="focus:outline-none flex justify-start items-center space-x-6 hover:text-white bg-white border-none hover:bg-cyan-700 text-gray-600 rounded  py-3 pl-4  w-full ">
                   <img src={dirver} alt="/" className="w-8" />

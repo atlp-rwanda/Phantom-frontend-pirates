@@ -5,6 +5,7 @@ import routeReducer from "../features/Route/routeSlice";
 import EmployeesReducer from "../features/Employees/EmployeeSlice";
 import RoleReducer from "../features/Roles/RoleSlice";
 import CompanyReducer from "../features/company/companySlice";
+import BusReducer from "../features/buses/busSlice";
 export const store = configureStore({
   reducer: {
     viewSearchedBuses: viewBusReducer,
@@ -12,6 +13,7 @@ export const store = configureStore({
     routes: routeReducer,
     employees: EmployeesReducer,
     roles: RoleReducer,
-    companies: CompanyReducer
+    companies: CompanyReducer,
+    buses: BusReducer
   },
 });

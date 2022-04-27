@@ -12,7 +12,7 @@ import ViewBus from './components/ViewBus';
 import Notifications from './container/Notifications';
 import Rout from './container/Routes';
 import Company from './container/Company';
-//import Bus from './container/Bus';
+import Bus from './container/Bus';
 const App = () => {
  return (
    <div>
@@ -28,6 +28,7 @@ const App = () => {
          <Route path="/operator" element={<OperatorPage/>}/>
          <Route path="/driver" element={<DriverMenu/>}/>
          <Route path="/company" element={<Company/>}/>
+         <Route path="/bus" element={<Bus/>}/>
        </Routes>
        <ToastContainer />
      </React.StrictMode>
