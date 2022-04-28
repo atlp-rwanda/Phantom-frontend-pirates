@@ -1,0 +1,39 @@
+{
+    "error": {
+      "internet": "Oups, une erreur s'est produite ou vous n'êtes pas en ligne"
+    },
+    "navbar": {
+      "home": "Homepage",
+      "About": "À propos",
+      "routes": "Route",
+      "contact": "Nous contacter",
+      "signIn": "Connexion",
+      "signOut":"Déconnecter"
+    },
+    "landingPage": {
+      "welcome_message": "FACILITEZ VOS TRANSPORTS AVEC PHANTOM",
+      "span":"À",
+      "pTag1": "nous apprécions votre temps.",
+      "pTag2": "Suivez la distance parcourue par votre bus et gagnez du temps."
+    },
+    "searchBox": {
+      "pTag1": "Jusqu'où est le bus ?",
+      "button": "Trouver un bus"
+    },
+    "login":{
+      "button":"Connexion",
+      "forget":"Mot de passe oublié?",
+      "span":"OU",
+      "google":"Connecte avec Google",
+      "new":"Nouveau sur Phantom ?",
+      "register":"S'inscrire"
+    },
+    "notifications":{
+      "notf":"Avis"
+    },
+    "notFound":{
+      "span":"Cette page n'existe pas.",
+      "p":"Mais ne vous inquiétez pas, vous pouvez trouver beaucoup d'autres choses sur notre page d'accueil.",
+      "link":"Homepage"
+    }
+  }
