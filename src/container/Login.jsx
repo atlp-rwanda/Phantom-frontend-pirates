@@ -188,7 +188,7 @@ const Login = ({t}) => {
                               <hr className="w-full"/>
                             </div>
                             <button aria-label="Login with Google" role="button" className="focus:outline-none  focus:ring-2 focus:ring-offset-1
-                             focus:ring-gray-700 py-2.5 px-6 border rounded-lg flex w-full mt-1 bg-gray-300 md:bg-white">
+                             focus:ring-gray-700 py-2.5 px-6 border rounded-lg flex w-full mt-1 bg-gray-300 md:bg-white whitespace-nowrap">
                                  <div className='w-1/5'>
                                    <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sign_in-svg2.svg" alt="google"/>
                                  </div>
