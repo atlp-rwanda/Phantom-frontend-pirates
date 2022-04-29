@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import FindBUsButtonSpinner from './FindBUsButtonSpinner';
 import { withTranslation } from 'react-i18next';
 
-const SearchBox = ({t}) => {
+const SearchBox = ({ t }) => {
   const [source, setSource] = useState('');
   const [destination, setDestination] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -40,6 +40,9 @@ const SearchBox = ({t}) => {
     if (Object.keys(viewBusData).length != 0) setIsLoading(false);
   };
 
+  const className =
+    'py-2.5 px-5 disabled text-sm  border border-gray-200  inline-flex items-center bg-[#FFC107] border-none rounded-[5px] h-[32px] w-[40%] md:w-[16%] italic text-black font-bold bg-opacity-[80%]';
+
   return (
     <div
       className="absolute w-[80%] h-[400px] max-w-[400px] sm:bottom-[5%] bottom-[10%] bg-[#000000] bg-opacity-[50%]
@@ -47,7 +50,7 @@ const SearchBox = ({t}) => {
     >
       <div className="flex md:justify-start justify-center ">
         <p className="relative text-white  pt-4 md:pl-[9%] mb-[-12px] font-bold italic mt-16 md:mt-0">
-        {t('searchBox.pTag1')}
+          {t('searchBox.pTag1')}
         </p>
       </div>
       <div className="grid grid-cols-1 gap-y-5 place-items-center md:flex md:flex-wrap md:justify-center md:gap-5 pt-10 italic">
@@ -68,7 +71,7 @@ const SearchBox = ({t}) => {
       </div>
       <div className="pt-5 flex md:justify-end justify-center md:pr-[9%]">
         {isLoading ? (
-          <FindBUsButtonSpinner />
+          <FindBUsButtonSpinner style={className} />
         ) : (
           <button
             className="bg-[#FFC107] border-none rounded-[5px] h-[32px] w-[40%] md:w-[16%] italic text-black font-bold hover:bg-opacity-[80%]"

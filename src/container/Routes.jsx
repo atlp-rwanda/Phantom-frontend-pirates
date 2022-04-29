@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from '../components/AddRouteModal';
 import SlideBar from '../components/SlideBar';
 
+// import React from "react";
 function Index() {
   return (
     <div className="flex flex-no-wrap">

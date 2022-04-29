@@ -1,12 +1,8 @@
 import React from 'react';
 
-const FindBUsButtonSpinner = () => {
+const FindBUsButtonSpinner = ({ style }) => {
   return (
-    <button
-      disabled
-      type="button"
-      class="py-2.5 px-5 disabled text-sm  border border-gray-200  inline-flex items-center bg-[#FFC107] border-none rounded-[5px] h-[32px] w-[40%] md:w-[16%] italic text-black font-bold bg-opacity-[80%]"
-    >
+    <button disabled type="button" class={style}>
       <svg
         role="status"
         class="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600"

@@ -4,14 +4,23 @@ import dirver from '../images/truck-driver.svg';
 import bus from '../images/bus-alt.svg';
 import home from '../images/home.svg';
 import road from '../images/road.svg';
+import { useNavigate } from 'react-router-dom';
+
 function SlideBar() {
+  const navigate = useNavigate();
+
   return (
     <div
       id="Main"
-      className={` bg-white fixed transform  xl:translate-x-0 ease-in-out transition duration-500 flex justify-start items-start w-full sm:w-72   flex-col h-full`}
+      className={` bg-white transform fixed xl:translate-x-0 ease-in-out transition duration-500 flex justify-start items-start w-full sm:w-72   flex-col h-full`}
     >
       <div>
-        <img src={logo} alt="/" className="w-66 pl-10" />
+        <img
+          src={logo}
+          alt="/"
+          className="w-66 pl-10 cursor-pointer"
+          onClick={() => navigate('/')}
+        />
       </div>
       <div className="xl:mt-6 flex flex-col justify-start items-start  px-4 w-full space-y-3 pb-5 ">
         <div className=" relative focus:outline-none flex jusitfy-start w-full   text-gray-800 rounded  items-center border-gray-300 focus:border-gray-400 border  "></div>
@@ -24,10 +33,10 @@ function SlideBar() {
           <p className="text-base leading-4 ">Buses</p>
         </button>
         <button className="focus:outline-none flex justify-start items-center space-x-6 hover:text-white bg-white border-none hover:bg-cyan-700 text-gray-600 rounded  py-3 pl-4  w-full ">
-          <img src={dirver} alt="/" className="w-10" />
+          <img src={dirver} alt="/" className="w-8" />
           <p className="text-base leading-4  ">Drivers</p>
         </button>
-        <button className="flex justify-start items-center space-x-6 hover:text-white focus:outline-none focus:bg-indigo-700 focus:text-white bg-white border-none hover:bg-cyan-700 text-gray-600 rounded py-3 pl-4  w-full ">
+        <button className="flex justify-start items-center space-x-6 hover:text-white focus:outline-none focus:bg-cyan-700 focus:text-white bg-white border-none hover:bg-cyan-700 text-gray-600 rounded py-3 pl-4  w-full ">
           <img src={road} alt="/" className="w-8" />
           <p className="text-base leading-4  ">Routes</p>
         </button>
