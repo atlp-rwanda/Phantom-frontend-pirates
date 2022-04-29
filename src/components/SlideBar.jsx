@@ -8,7 +8,7 @@ function SlideBar() {
   return (
     <div
       id="Main"
-      className={` bg-white transform  xl:translate-x-0 ease-in-out transition duration-500 flex justify-start items-start w-full sm:w-72   flex-col h-full`}
+      className={` bg-white fixed transform  xl:translate-x-0 ease-in-out transition duration-500 flex justify-start items-start w-full sm:w-72   flex-col h-full`}
     >
       <div>
         <img src={logo} alt="/" className="w-66 pl-10" />
