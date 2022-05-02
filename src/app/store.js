@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import viewBusReducer from '../features/viewBus/ViewBusSlice';
-import authReducer from '../features/auth/authSlice'
+import EmployeesReducer from '../features/Employees/EmployeeSlice';
+import authReducer from '../features/auth/authSlice';
 
 export const store = configureStore({
   reducer: {
     viewSearchedBuses: viewBusReducer,
-    auth: authReducer
+    auth:authReducer,
+    employees: EmployeesReducer
   },
 });
