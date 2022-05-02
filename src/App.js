@@ -1,9 +1,12 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
 import LandingPage from './container/LandingPage';
 import { NotFound } from './components';
 import ViewBus from './components/ViewBus';
-import Registering from './container/Registering';
+import Employees from './container/Employees';
+import Registering from './components/RegisterEmployees'
 
 const App = () => {
   return (
@@ -13,8 +16,10 @@ const App = () => {
           <Route path="/" element={<LandingPage />} />
           <Route path="/viewBus" element={<ViewBus />} />
           <Route path="/*" element={<NotFound />} />
-          <Route path="/registering" element={<Registering/>}/>
+          <Route path="/employees" element={<Employees />} />
+          <Route path="/register" element={<Registering/>}/>
         </Routes>
+        <ToastContainer />
       </React.StrictMode>
     </div>
   );

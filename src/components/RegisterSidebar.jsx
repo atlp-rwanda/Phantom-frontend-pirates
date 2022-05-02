@@ -10,7 +10,7 @@ function RegisterSidebar() {
       <div>
         <img src={logo} alt="/" className="w-66 pl-10" />
       </div>
-      <div className="xl:mt-6 flex flex-col justify-start items-start  px-4 w-full space-y-3 pb-5 ">
+      <div className="xl:mt-40 flex flex-col justify-start items-start  px-4 w-full space-y-3 pb-5">
         <button className="focus:outline-none flex justify-start items-center space-x-6 hover:text-white bg-white border-none hover:bg-cyan-700 text-gray-600 rounded  py-3 pl-4  w-full ">
           <div className="flex">
             <svg
@@ -54,11 +54,11 @@ function RegisterSidebar() {
         <hr className=" border-gray-100 w-full" />
       </div>
 
-      <div className="w-full px-4">
-        <hr className=" border-gray-100 w-full" />
+      <div className="w-full ">
+        <hr className=" border-black w-full" />
       </div>
 
-      <div className="mt-36 flex  bg-white justify-start space-x-2 items-center h-full py-4 px-3.5    w-full  ">
+      <div className="mt-36 flex  bg-white justify-start space-x-2 items-center h-full py-4 px-3.5 w-full ">
         <div>
           <img src="https://i.ibb.co/fxrbS6p/Ellipse-2-2.png" alt="avatar" />
         </div>
