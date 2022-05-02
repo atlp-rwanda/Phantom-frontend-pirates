@@ -47,7 +47,7 @@ const Login = () => {
     }
 
     if (isSuccess || user) {
-      navigate('/notification')
+      navigate('/routes')
     }
   }, [user, isError, isSuccess, message, navigate, dispatch])
 

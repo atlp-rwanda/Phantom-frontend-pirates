@@ -5,11 +5,11 @@ const FindBUsButtonSpinner = () => {
     <button
       disabled
       type="button"
-      class="py-2.5 px-5 disabled text-sm  border border-gray-200  inline-flex items-center bg-[#FFC107] border-none rounded-[5px] h-[32px] w-[40%] md:w-[16%] italic text-black font-bold bg-opacity-[80%]"
+      className="py-2.5 px-5 disabled text-sm  border border-gray-200  inline-flex items-center bg-[#FFC107] border-none rounded-[5px] h-[32px] w-[40%] md:w-[16%] italic text-black font-bold bg-opacity-[80%]"
     >
       <svg
         role="status"
-        class="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600"
+        className="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
