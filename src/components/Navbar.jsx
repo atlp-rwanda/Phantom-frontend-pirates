@@ -14,7 +14,7 @@ function Navbar() {
 
   return (
     <div className="w-screen h-[90px] z-10  bg-[#000] bg-opacity-[12%] fixed drop-shadow-lg">
-      <div className="flex justify-between items-center w-full h-full">
+      <div className="flex-none justify-between items-center w-full h-full">
         <div className="flex items-center w-full justify-between">
           <img src={logo} alt="/" className="w-36 pl-10" />
           <div className="md:flex items-center">

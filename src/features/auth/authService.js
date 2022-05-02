@@ -1,14 +1,16 @@
-import axios from 'axios'
-import Cookies from 'universal-cookie'
-import phantomApi from '../../api/api'
-
-const cookies = new Cookies();
+import phantomApi from '../../api/api';
 
 // Login user
 const login = async (userData) => {
   const response = await phantomApi.post('users/login', userData)
   if (response.data) {
-    cookies.set('user', JSON.stringify(response.data))
+    if(response.data.adminToken){
+      localStorage.setItem('jwt', response.data.adminToken)
+    }else if (response.data.operatorToken) {
+      localStorage.setItem('jwt', response.data.operatorToken);
+    } else {
+      localStorage.setItem('jwt', response.data.driverToken);
+    }
   }
 
   return response.data
@@ -16,7 +18,7 @@ const login = async (userData) => {
 
 // Logout user
 const logout = () => {
-  cookies.remove('user');
+  localStorage.removeItem('user');
 }
 
 const authService = {
@@ -24,4 +26,4 @@ const authService = {
   login,
 }
 
-export default authService
+export default authService 

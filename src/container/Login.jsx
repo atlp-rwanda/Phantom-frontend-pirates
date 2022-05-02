@@ -3,14 +3,15 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { login, reset } from '../features/auth/authSlice'
-import { NavHeader } from '../components/index';
+import { Navbar } from '../components/index';
 import IconButton from "@mui/material/IconButton/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import InputAdornment from "@mui/material/InputAdornment";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Input from "@mui/material/Input";
+import { AtSymbolIcon, LockClosedIcon } from "@heroicons/react/outline"
 import { SpinnerCircular } from 'spinners-react';
-import { Navbar } from '../components';
+
 const Login = () => {
 
   const [values, setValues] = useState({
@@ -45,9 +46,8 @@ const Login = () => {
     if (isError) {
       toast.error(message)
     }
-
     if (isSuccess || user) {
-      navigate('/notification')
+      navigate('/routes')
     }
   }, [user, isError, isSuccess, message, navigate, dispatch])
 
@@ -92,12 +92,12 @@ const Login = () => {
   }
     return (
         <>
-          <div className="flex items-center min-h-screen">
+          <div className="flex items-start md:items-center lg:items-center xl:items-center min-h-screen">
             <div
                 className="h-full absolute">
                 <Navbar />
             </div>
-            <div className="flex-1 h-full max-w-6xl mx-auto rounded-lg">
+            <div className="flex-1 h-full items-center max-w-6xl mx-auto rounded-lg">
                 <div className="flex flex-col md:flex-row">
                     <div className="h-54 md:h-auto md:w-3/5">
                         <img className="object-cover w-full h-full" src="https://res.cloudinary.com/basha18/image/upload/v1649243881/start-business_s2ezgi.png"
@@ -118,11 +118,7 @@ const Login = () => {
                                 }
                             </div>
                             <div className="flex rounded-md shadow-sm mt-8 mb-6">
-                                <p className="h-6 w-6 mr-1 md:text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 md:h-6 md:w-6" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fillRule="evenodd" d="M14.243 5.757a6 6 0 10-.986 9.284 1 1 0 111.087 1.678A8 8 0 1118 10a3 3 0 01-4.8 2.401A4 4 0 1114 10a1 1 0 102 0c0-1.537-.586-3.07-1.757-4.243zM12 10a2 2 0 10-4 0 2 2 0 004 0z" clipRule="evenodd" />
-                                </svg>
-                                </p>
+                                <AtSymbolIcon className="h-6 w-6 mr-1 md:text-white"/>
                                 <input
                                     type='text'
                                     className='w-full border-b-4 bg-transparent placeholder-gray-700  outline-none focus:outline-none md:text-white'
@@ -137,11 +133,7 @@ const Login = () => {
                                 <span className=''>{validation.email && <p className='p-2'>{validation.email}</p>}</span>
                             </div>
                             <div className="flex rounded-md shadow-sm">
-                                <p className="h-6 w-6 mr-1 md:text-white">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                     </svg>
-                                </p>
+                                <LockClosedIcon className="h-6 w-6 mr-1 md:text-white"/>
                                 <Input 
                                   className='w-full border-b-4 bg-transparent outline-none placeholder-gray-700 focus:outline-none md:text-white'
                                   type={values.showPasswordd ? "text" : "password"}
