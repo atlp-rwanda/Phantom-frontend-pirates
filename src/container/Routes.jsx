@@ -1,37 +1,24 @@
-import React from "react";
+import React, {useEffect} from "react";
+import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 import Modal from '../components/AddRouteModal'
 import SlideBar from '../components/SlideBar'
-// export default function Index() {
-//   const [show, setShow] = useState(false);
-
-//   return (
-//     <div className="bg-gray-100">
-//       <div className="bg-white xl:hidden flex text-gray-800  hover:text-black focus:outline-none focus:text-black justify-between w-full p-6 items-center ">
-//         <img src={logo} alt="/" className="w-36 pl-10" />
-//         <div aria-label="toggler" className="flex justify-center items-center">
-//           <button id="open" onClick={() => setShow(!show)} aria-label="open" className={`${show ? "" : "hidden"} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800`}>
-//             <svg className="text-gray-800" width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-//               <path d="M4 6H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-//               <path d="M4 12H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-//               <path d="M4 18H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-//             </svg>
-//           </button>
-//           <button id="close" onClick={() => setShow(!show)} aria-label="close" className={`${show ? "hidden" : ""} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800`}>
-//             <svg className="text-gray-800" width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-//               <path d="M18 6L6 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-//               <path d="M6 6L18 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-//             </svg>
-//           </button>
-//         </div>
-//       </div>
-      
-//     </div>
-    
-//   );
-// }
-
-// import React from "react";
+import RouteTable from "../components/RouteTable";
+import { SearchIcon } from "@heroicons/react/outline"
 function Index() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const { user } = useSelector((state) => state.auth)
+
+  useEffect(() => {
+    
+    if (!user) {
+      //navigate('/login')
+    }
+
+  }, [user, navigate, dispatch])
+  
     return (
         <div className="flex flex-no-wrap">
             <div className="w-64 absolute sm:relative bg-indigo-900 shadow md:h-full flex-col justify-between hidden sm:flex">
@@ -39,27 +26,22 @@ function Index() {
             </div>
             
             <div className="container mx-auto py-10 bg-gray-100 h-auto md:w-4/5 w-11/12 px-6">
-              <div class="flex justify-around">
+              <div className="flex justify-around">
                 <div>
                   <h2 className="text-lg text-cyan-700 font-bold">Admin Pannel</h2>
                 </div>
-                <div class="flex border-2 bg-white">
-                      <button class="flex items-center justify-center px-4 bg-white border-none">
-                          <svg class="w-6 h-6 text-gray-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24">
-                              <path
-                                  d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z">
-                              </path>
-                          </svg>
+                <div className="flex border-2 bg-white">
+                      <button className="flex items-center justify-center px-4 bg-white border-none">
+                          <SearchIcon className='w-6 h-6 text-gray-600'/>
                       </button>
-                      <input type="text" class="px-4 py-2 w-80" placeholder="Search..."/>
+                      <input type="text" className="px-4 py-2 w-80" placeholder="Search..."/>
                   </div>
               </div>
-              <div class="p-6 w-full bg-white mt-12 place-content-center rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                <div class="place-content-center">
-                  <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                      <div class="overflow-hidden grid place-items-center">
+              <div className="p-6 w-full bg-white mt-12 place-content-center rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                <div className="place-content-center">
+                  <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                      <div className="overflow-hidden grid place-items-center">
                         <div className="w-10/12 flex justify-between">
                           <div>
                             <h2>Routes List</h2>
@@ -73,75 +55,7 @@ function Index() {
                         <div className="relative focus:outline-none flex jusitfy-start w-full mt-6 mb-4   text-gray-800 rounded  items-center border-cyan-700 focus:border-gray-400 border-b-8  ">
                   
                        </div>
-                        <table class="w-10/12">
-                          <thead class="bg-white border-b">
-                            <tr>
-                              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                Source
-                              </th>
-                              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                Destination
-                              </th>
-                              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                Action
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr class="bg-gray-100 border-b">
-                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                Remera
-                              </td>
-                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                Nyabugogo
-                              </td>
-                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                  <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                                </svg>
-                              </td>
-                            </tr>
-                            <tr class="bg-white border-b">
-                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                Downtown
-                              </td>
-                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                Remera
-                              </td>
-                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                  <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                                </svg>
-                              </td>
-                            </tr>
-                            <tr class="bg-gray-100 border-b">
-                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                Remera
-                              </td>
-                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                Nyabugogo
-                              </td>
-                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                  <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                                </svg>
-                              </td>
-                            </tr>
-                            <tr class="bg-white border-b">
-                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                Downtown
-                              </td>
-                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                Remera
-                              </td>
-                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                  <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                                </svg>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+                        <RouteTable />
                       </div>
                       <div className=" w-11/12 flex justify-end">
                         <div>
