@@ -1,11 +1,13 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
 import LandingPage from './container/LandingPage';
+import Login from "./container/Login";
 import { NotFound } from './components';
 import ViewBus from './components/ViewBus';
-import Login from './container/Login';
-import Notifications from './container/Notifications';
-import Registering from './container/Registering';
+import Employees from './container/Employees';
+import Notifications from "./container/Notifications";
 
 const App = () => {
   return (
@@ -17,8 +19,9 @@ const App = () => {
           <Route path="/*" element={<NotFound />} />
           <Route path='/login' element={<Login />} />
           <Route path='/notification' element={<Notifications />} />
-          <Route path="/registering" element={<Registering/>}/>
-        </Routes>
+          <Route path="/employees" element={<Employees />} />
+    </Routes>
+        <ToastContainer />
       </React.StrictMode>
     </div>
   );
