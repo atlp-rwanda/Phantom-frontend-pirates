@@ -3,3 +3,6 @@ export { default as Navbar } from './Navbar';
 export { default as SearchBox } from './SearchBox';
 export { default as NavHeader } from './NavHeader';
 export { default as Spinner } from './FindBUsButtonSpinner';
+export { default as Simulation } from './Simulation';
+export { default as UserMap } from './UserMap';
+export { default as LeafMap } from './LeafMap';

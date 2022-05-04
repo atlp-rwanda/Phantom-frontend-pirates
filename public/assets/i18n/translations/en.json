@@ -35,5 +35,12 @@
     "span": "This page does not exist.",
     "p": "But dont worry, you can find plenty of other things on our homepage.",
     "link": "Go home"
+  },
+  "simulator": {
+    "h1":"Welcome to Phantom Simulator",
+    "p":"In this section you will simulate the bus. You will simulate with controls such as start, stop, speed up and down bus. You can also add and remove passengers. Enjoy!",
+    "plate": "Distance Covered",
+    "speed":"Speed",
+    "passengers": "Passengers"
   }
 }
