@@ -65,7 +65,6 @@ const Simulation = ({ t }) => {
 
     const increaseSpeed = () => {
         if (moving === true && busRest === false) {
-
         }
         else {
             notifyInfo('The bus is stopped or rest')
