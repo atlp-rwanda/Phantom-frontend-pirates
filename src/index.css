@@ -20,3 +20,7 @@ input:-webkit-autofill:focus{
   color: rgba(108, 105, 105, 0.326);
 }
 
+
+.leaflet-marker-pane > :not(:nth-last-child(-n+3)){
+display: none;
+}

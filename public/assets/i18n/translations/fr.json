@@ -35,5 +35,12 @@
       "span":"Cette page n'existe pas.",
       "p":"Mais ne vous inquiétez pas, vous pouvez trouver beaucoup d'autres choses sur notre page d'accueil.",
       "link":"Homepage"
+    },
+    "simulator": {
+      "h1":"Bienvenue dans Phantom Simulator",
+      "p":"Dans cette section, vous allez simuler le bus. Vous simulerez avec des contrôles tels que démarrer, arrêter, accélérer et descendre le bus. Vous pouvez également ajouter et supprimer des passagers. Profitez!",
+      "plate": "Plaque",
+      "speed":"Vitesse",
+      "passengers": "Passagers"
     }
   }
