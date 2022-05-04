@@ -5,6 +5,6 @@ import authReducer from '../features/auth/authSlice'
 export const store = configureStore({
   reducer: {
     viewSearchedBuses: viewBusReducer,
-    auth: authReducer
+    auth: authReducer,
   },
 });
