@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React from 'react'
 import 'regenerator-runtime/runtime'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
@@ -74,9 +73,6 @@ export const authSlice = createSlice({
 })
 
 export const { reset } = authSlice.actions
-=======
-import {createSlice,createAsyncThunk} from '@reduxjs/toolkit'
-import authService from './authService'
 
 const initialState = {
     user: null,
@@ -128,5 +124,4 @@ export const authSlice= createSlice({
 })
 
 export const {reset}= authSlice.actions
->>>>>>> 154c6efff39ce338054c596f2b4721a92e9fd80c
 export default authSlice.reducer
