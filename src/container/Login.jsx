@@ -46,8 +46,7 @@ const Login = ({t}) => {
     if (isError) {
       toast.error(message)
     }
-
-    if (isSuccess || user) {
+    if (isSuccess && user) {
       navigate('/notification')
     }
   }, [user, isError, isSuccess, message, navigate, dispatch])

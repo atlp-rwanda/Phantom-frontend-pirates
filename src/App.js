@@ -5,6 +5,8 @@ import { NotFound } from './components';
 import ViewBus from './components/ViewBus';
 import Login from './container/Login';
 import Notifications from './container/Notifications';
+import Aboutus from './container/Aboutus';
+import Contactus from './container/Contactus';
 
 const App = () => {
   return (
@@ -16,6 +18,8 @@ const App = () => {
           <Route path="/*" element={<NotFound />} />
           <Route path='/login' element={<Login />} />
           <Route path='/notification' element={<Notifications />} />
+          <Route path='/aboutus' element={<Aboutus />} />
+          <Route path='/contactus' element={<Contactus />} />
         </Routes>
       </React.StrictMode>
     </div>

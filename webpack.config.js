@@ -1,5 +1,6 @@
 const path = require("path");
 const dotenv = require("dotenv");
+const Dotenv = require("dotenv-webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -43,6 +44,7 @@ module.exports = {
       filename: "[name].css",
       chunkFilename: "[id].css",
     }),
+    new Dotenv()
   ],
   resolve: {
     extensions: ["", ".js", ".jsx"],
