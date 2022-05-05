@@ -45,7 +45,6 @@ const Login = () => {
     if (isError) {
       toast.error(message)
     }
-
     if (isSuccess || user) {
       navigate('/routes')
     }
@@ -92,12 +91,12 @@ const Login = () => {
   }
     return (
         <>
-          <div className="flex items-center min-h-screen">
+          <div className="flex items-start md:items-center lg:items-center xl:items-center min-h-screen">
             <div
                 className="h-full absolute">
                 <Navbar />
             </div>
-            <div className="flex-1 h-full max-w-6xl mx-auto rounded-lg">
+            <div className="flex-1 h-full items-center max-w-6xl mx-auto rounded-lg">
                 <div className="flex flex-col md:flex-row">
                     <div className="h-54 md:h-auto md:w-3/5">
                         <img className="object-cover w-full h-full" src="https://res.cloudinary.com/basha18/image/upload/v1649243881/start-business_s2ezgi.png"

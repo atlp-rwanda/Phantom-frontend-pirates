@@ -4,36 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Modal from '../components/AddRouteModal'
 import SlideBar from '../components/SlideBar'
 import RouteTable from "../components/RouteTable";
-// export default function Index() {
-//   const [show, setShow] = useState(false);
 
-//   return (
-//     <div className="bg-gray-100">
-//       <div className="bg-white xl:hidden flex text-gray-800  hover:text-black focus:outline-none focus:text-black justify-between w-full p-6 items-center ">
-//         <img src={logo} alt="/" className="w-36 pl-10" />
-//         <div aria-label="toggler" className="flex justify-center items-center">
-//           <button id="open" onClick={() => setShow(!show)} aria-label="open" className={`${show ? "" : "hidden"} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800`}>
-//             <svg className="text-gray-800" width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-//               <path d="M4 6H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-//               <path d="M4 12H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-//               <path d="M4 18H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-//             </svg>
-//           </button>
-//           <button id="close" onClick={() => setShow(!show)} aria-label="close" className={`${show ? "hidden" : ""} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800`}>
-//             <svg className="text-gray-800" width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-//               <path d="M18 6L6 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-//               <path d="M6 6L18 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-//             </svg>
-//           </button>
-//         </div>
-//       </div>
-      
-//     </div>
-    
-//   );
-// }
-
-// import React from "react";
 function Index() {
   const navigate = useNavigate()
   const dispatch = useDispatch()

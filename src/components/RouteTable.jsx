@@ -61,6 +61,7 @@ function RouteTable() {
                           {route.destination}
                         </td>
                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                          <p className='hidden'>{route.id}</p>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-5 w-5"

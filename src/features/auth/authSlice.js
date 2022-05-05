@@ -63,7 +63,6 @@ export const authSlice = createSlice({
         state.isError = true
         state.message = action.payload
         state.user = null
-        console.log(action.payload)
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null
