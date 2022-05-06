@@ -7,8 +7,10 @@ import {
   fetchAsyncSetPermission,
   getPermissions,
   getRoles,
+  getSuccess,
 } from '../features/setPermission/setPermissionSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
+import { useSelector, useDispatch } from 'react-redux';
 
 // import React from "react";
 function RoleSetPermission() {
@@ -18,11 +20,13 @@ function RoleSetPermission() {
   // const [isLoading, setIsLoading] = useState(false);
 
   const permissions = useSelector(getPermissions);
-  const { isLoading, isSuccess } = useSelector(
-    (state) => state.rolesPermissions
-  );
+  const { isLoading } = useSelector((state) => state.rolesPermissions);
+
+  const isSuccess = useSelector(getSuccess);
   const roles = useSelector(getRoles);
   const dispatch = useDispatch();
+
+  // Swal.fire('Nice to meet you', '', 'success');
 
   const selectRole = (e) => {
     e.preventDefault();
@@ -41,8 +45,11 @@ function RoleSetPermission() {
 
   useEffect(() => {
     dispatch(fetchAsyncPermissions());
-    if (isSuccess) setShowModal(false);
-  }, [dispatch]);
+    if (isSuccess) {
+      setShowModal(false);
+      Swal.fire('permission is assigned successful', '', 'success');
+    }
+  }, [dispatch, isSuccess]);
 
   const buttonSpinnerClass =
     'focus:outline-none transition duration-150 ease-in-out bg-cyan-700 text-white bg-white rounded text-cyan-700 font-bold px-8 py-2 text-sm bg-opacity-[80%]';

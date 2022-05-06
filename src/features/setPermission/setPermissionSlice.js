@@ -68,10 +68,10 @@ const roleSlice = createSlice({
     },
 
     // assigned perm to role
-    // [fetchAsyncAssignedPerm.fulfilled]: (state, { payload }) => {
-    //   state.status = 'success';
-    //   state.assignedPermRole = payload;
-    // },
+    [fetchAsyncAssignedPerm.fulfilled]: (state, { payload }) => {
+      state.status = 'success';
+      state.assignedPermRole = payload;
+    },
 
     // permissions
     [fetchAsyncPermissions.fulfilled]: (state, { payload }) => {
@@ -94,4 +94,5 @@ export const getRoles = (state) => state.rolesPermissions.roles;
 export const getAssignedPermRole = (state) =>
   state.rolesPermissions.assignedPermRole;
 export const getPermissions = (state) => state.rolesPermissions.permissions;
+export const getSuccess = (state) => state.rolesPermissions.isSuccess;
 export default roleSlice.reducer;
