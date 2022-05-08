@@ -5,12 +5,14 @@ import {
   getRoles,
   getAssignedPermRole,
   fetchAsyncAssignedPerm,
+  fetchAsyncCreateRole,
 } from '../features/setPermission/setPermissionSlice';
 import FindBUsButtonSpinner from './FindBUsButtonSpinner';
+import Swal from 'sweetalert2';
 
 const RoleCard = () => {
   const [showModal, setShowModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [role, setRole] = useState('');
 
   const buttonSpinnerClass =
@@ -20,16 +22,24 @@ const RoleCard = () => {
   const roles = useSelector(getRoles);
   const assignedPermRole = useSelector(getAssignedPermRole);
 
-  useEffect(() => {
-    dispatch(fetchAsyncRoles());
-    dispatch(fetchAsyncAssignedPerm(2));
-  }, [dispatch]);
+  const { isLoading, message, isSuccess, isRejected } = useSelector(
+    (state) => state.rolesPermissions
+  );
 
   const addRoleHundler = (roleName) => {
-    setIsLoading(true);
-    roleName = role;
-    alert(roleName);
+    dispatch(fetchAsyncCreateRole(roleName));
   };
+
+  useEffect(() => {
+    dispatch(fetchAsyncRoles());
+    if (isSuccess) {
+      setShowModal(false);
+      Swal.fire(`${message}`, '', 'success');
+    } else if (isRejected) {
+      setShowModal(false);
+      Swal.fire(`${message}`, '', 'error');
+    }
+  }, [dispatch]);
 
   return (
     <div class="p-6  w-full bg-white mt-12 place-content-center rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
@@ -209,7 +219,7 @@ const RoleCard = () => {
                           <td class="text-md text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                             <div>
                               <select className="bg-black bg-opacity-[0%]  focus:outline-none focus:cursor-pointer text-xl">
-                                <option>permission</option>
+                                <option>permissions</option>
                                 {assignedPermRole &&
                                   assignedPermRole.map((permission, index) => (
                                     <>

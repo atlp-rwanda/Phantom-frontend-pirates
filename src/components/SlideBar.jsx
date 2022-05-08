@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from '../images/logo.png';
 import dirver from '../images/truck-driver.svg';
 import bus from '../images/bus-alt.svg';
 import home from '../images/home.svg';
 import road from '../images/road.svg';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { UserIcon } from '@heroicons/react/outline';
 
 function SlideBar() {
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (user?.admin) alert(user.admin[0]);
+  }, [user]);
 
   return (
     <div
@@ -51,14 +58,14 @@ function SlideBar() {
 
       <div className="mt-36 flex  bg-white justify-start space-x-2 items-center h-full py-4 px-3.5    w-full  ">
         <div>
-          <img src="https://i.ibb.co/fxrbS6p/Ellipse-2-2.png" alt="avatar" />
+          <UserIcon className="h-8 text-blue-700" />
         </div>
         <div className="flex flex-col justify-start items-start space-y-2">
           <p className="cursor-pointer text-base leading-4 text-black">
-            Alexis Enache
+            {user?.admin[0]}
           </p>
           <p className="cursor-pointer text-xs leading-3 text-black">
-            alexis _enache@gmail.com
+            {user?.admin[1]}
           </p>
         </div>
         <button

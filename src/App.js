@@ -7,6 +7,8 @@ import Login from './container/Login';
 import Notifications from './container/Notifications';
 import SetPermission from './container/SetPermission';
 import Rout from './container/Routes';
+import Aboutus from './container/Aboutus';
+import Contactus from './container/Contactus';
 
 const App = () => {
   return (
@@ -17,9 +19,11 @@ const App = () => {
           <Route path="/viewBus" element={<ViewBus />} />
           <Route path="/*" element={<NotFound />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/role" element={<SetPermission />} />
+          <Route path="/set-permission" element={<SetPermission />} />
           <Route path="/notification" element={<Notifications />} />
           <Route path="/routes" element={<Rout />} />
+          <Route path="/aboutus" element={<Aboutus />} />
+          <Route path="/contactus" element={<Contactus />} />
         </Routes>
       </React.StrictMode>
     </div>

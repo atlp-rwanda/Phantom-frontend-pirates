@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, SearchBox } from '../components';
+import { Navbar, SearchBox, NavHeader } from '../components';
 import { withTranslation } from 'react-i18next';
 
 const LandingPage = ({ t }) => {
