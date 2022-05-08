@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { addEmployee } from "../features/Employees/EmployeeSlice";
 import FindBUsButtonSpinner from "./FindBUsButtonSpinner";
 
@@ -30,6 +30,8 @@ const AddRouteModal = () => {
     "focus:outline-none transition duration-150 ease-in-out bg-cyan-700 text-white bg-white rounded text-cyan-700 font-bold px-8 py-2 text-sm bg-opacity-[80%]";
 
   const dispatch = useDispatch();
+  const { isSuccess } = useSelector((state) => state.employees);
+
 
   const [disable, setDisabled] = useState(true);
 
@@ -37,6 +39,9 @@ const AddRouteModal = () => {
     if (firstRender.current) {
       firstRender.current = false;
       return;
+    }
+    if(isSuccess){
+      setShowModal(false)
     }
     setDisabled(formValidation());
     dispatch(addEmployee);

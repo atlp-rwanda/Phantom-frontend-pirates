@@ -1,6 +1,9 @@
-import React, { useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {fetchAsyncEmployees, getEmployees} from '../features/Employees/EmployeeSlice'
+import {
+  fetchAsyncEmployees,
+  getEmployees,
+} from "../features/Employees/EmployeeSlice";
 import { updateEmployee } from "../features/Employees/EmployeeSlice";
 import FindBUsButtonSpinner from "./FindBUsButtonSpinner";
 const options = [
@@ -20,21 +23,20 @@ const options = [
 
 function EmployeesTable() {
   const [showModal, setShowModal] = useState(false);
-   const [isLoading, setIsLoading] = useState(false);
-   const firstRender = useRef(true);
-   const [option, setOption] = useState(null);
-   const [employeeId,setEmployeeId]= useState(null)
-   /* console.log(option) */
+  const [isLoading, setIsLoading] = useState(false);
+  const firstRender = useRef(true);
+  const [option, setOption] = useState(null);
+  const [employeeId, setEmployeeId] = useState(null);
+  /* console.log(option) */
 
-  
-/*   const {users} = useSelector(getEmployees)
+  /*   const {users} = useSelector(getEmployees)
   console.log("=====users"+ users) */
-  const {employees} = useSelector(getEmployees);
+  const { employees } = useSelector(getEmployees);
   useEffect(() => {
     dispatch(fetchAsyncEmployees());
   }, [dispatch]);
 
-   const buttonSpinnerClass =
+  const buttonSpinnerClass =
     "focus:outline-none transition duration-150 ease-in-out bg-cyan-700 text-white bg-white rounded text-cyan-700 font-bold px-8 py-2 text-sm bg-opacity-[80%]";
 
   const dispatch = useDispatch();
@@ -57,21 +59,20 @@ function EmployeesTable() {
     e.preventDefault();
     const employeeData = {
       option,
-      employeeId
+      employeeId,
     };
-    console.log(option)
-    dispatch(updateEmployee(employeeData))
+    console.log(option);
+    dispatch(updateEmployee(employeeData));
     /* setIsLoading(true); */
-    setOption(null)
+    setOption(null);
   };
-  const modal = () =>{
-    setShowModal(true)
-    console.log(employee)
-  }
+  const modal = () => {
+    setShowModal(true);
+    console.log(employee);
+  };
 
   console.log(employeeId);
 
- 
   return (
     <div className="w-full">
       <>
@@ -121,7 +122,10 @@ function EmployeesTable() {
           <tbody>
             {employees &&
               employees.map((employee, index) => (
-                <tr key={index} className="bg-gray-100 border-b">
+                <tr
+                  key={index}
+                  className="even:bg-white odd:bg-gray-100 border-b"
+                >
                   <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                     {employee.firstname}
                   </td>

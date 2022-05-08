@@ -68,24 +68,22 @@ export const authSlice = createSlice({
         state.user = null
       })
       .addCase(register.pending,(state)=>{
-        state.isLoading = true
-       })
-       .addCase(register.fulfilled,(state,action) =>{
-          state.isLoading= false
-          state.isSuccess = true
-          state.user = action.payload
-       })
-       .addCase(register.rejected, (state,action) =>{
-           state.isLoading = false
-           state.isError= true
-           state.message= action.payload
-           state.user= null
-       })
+      state.isLoading = true
+     })
+     .addCase(register.fulfilled,(state,action) =>{
+        state.isLoading= false
+        state.isSuccess = true
+        state.user = action.payload
+     })
+     .addCase(register.rejected, (state,action) =>{
+         state.isLoading = false
+         state.isError= true
+         state.message= action.payload
+         state.user= null
+     })
+      
   },
 })
-
-export const { reset } = authSlice.actions
-
 // Register user
 export const register = createAsyncThunk(
     'auth/register',
@@ -98,6 +96,9 @@ export const register = createAsyncThunk(
         return thunkAPI.rejectWithValue(message)
     }
 })
+
+export const { reset } = authSlice.actions
+
 // export const authSlice= createSlice({
 //     name: 'auth',
 //     initialState,

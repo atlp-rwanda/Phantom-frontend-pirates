@@ -1,11 +1,25 @@
-import React, { useState } from 'react';
-import logo from '../images/logo.png';
-import { MenuIcon, XIcon } from '@heroicons/react/outline';
-import SelectLanguage from './SelectLanguage';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout, reset } from "../features/auth/authSlice";
+import logo from "../images/logo.png";
+import { MenuIcon, XIcon } from "@heroicons/react/outline";
+import SelectLanguage from "./SelectLanguage";
+import { withTranslation } from "react-i18next";
 
-function Navbar() {
+function NavHeader({ t }) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
+  const onLogout = () => {
+    dispatch(logout());
+    dispatch(reset());
+    navigate("/");
+  };
+
   const [dropDownMenu, setUpDropDown] = useState(false);
+  const [language, setLanguage] = useState("ENG");
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -13,25 +27,38 @@ function Navbar() {
   };
 
   return (
-    <div className="w-screen h-[90px] z-10  bg-[#000] bg-opacity-[12%] fixed drop-shadow-lg">
-      <div className="flex justify-between items-center w-full h-full">
+    <div className="w-screen h-[90px] z-10 border-b-2 border-button-color fixed">
+      <div className="pl-[10%] flex justify-between items-center w-full h-full">
         <div className="flex items-center w-full justify-between">
-          <img src={logo} alt="/" className="w-36 pl-10" />
-          <div className="md:flex items-center">
-            <div className="md:pr-[50px]">
-              <ul className="hidden md:flex text-white font-semibold ">
-                <li>Home</li>
-                <li>About</li>
-                <li>Routes</li>
-                <li className="whitespace-nowrap">Contact Us</li>
+          <img src={logo} alt="/" className="w-36" />
+          <div className="flex items-center">
+            <div className="md:pr-[90px]">
+              <ul className="hidden md:flex text-button-color font-semibold ">
+                <li>
+                  <Link to="/">
+                    <a>{t("navbar.home")}</a>
+                  </Link>
+                </li>
+                <li>{t("navbar.About")}</li>
+                <li>{t("navbar.routes")}</li>
+                <li>{t("navbar.contact")}</li>
               </ul>
             </div>
             <div className="hidden md:flex h-[30px] pr-[70px]">
-              <button className="w-[90px] border-button-color border-fon text-white bg-transparent hover:bg-button-color hover:text-white hover:border-none">
-                <Link to='/login'>
-                  <a>Log In</a>
-                </Link>
-              </button>
+              {user ? (
+                <button
+                  onClick={onLogout}
+                  className="w-[90px] border-white text-whte bg-red-700 hover:bg-button-color hover:text-white hover:border-none"
+                >
+                  {t("navbar.signOut")}
+                </button>
+              ) : (
+                <>
+                  <button className="w-[90px] border-white text-white bg-cyan-700 hover:bg-button-color hover:text-white hover:border-none">
+                    {t("navbar.signIn")}
+                  </button>
+                </>
+              )}
               <div className="px-10">
                 <SelectLanguage />
               </div>
@@ -50,27 +77,41 @@ function Navbar() {
       <ul
         className={
           !dropDownMenu
-            ? 'hidden'
-            : 'absolute md:hidden w-full text-white font-bold bg-[#000000] bg-opacity-[50%]'
+            ? "hidden"
+            : "absolute ] w-full text-white font-bold bg-[#000000] bg-opacity-[50%]"
         }
       >
-        <li className="border-y-2 border-zinc-300 w-full pl-9">Home</li>
-        <li className="border-b-2 border-zinc-300 w-full pl-9">About</li>
-        <li className="border-b-2 border-zinc-300 w-full pl-9">Routes</li>
-        <li className="border-b-2 border-zinc-300 w-full pl-9">Contact Us</li>
-        <div>
-          <div className="px-10 pt-8">
-            <SelectLanguage />
-          </div>
-        </div>
+        <li className="border-y-2 border-zinc-300 w-full pl-9">
+          {t("navbar.home")}
+        </li>
+        <li className="border-b-2 border-zinc-300 w-full pl-9">
+          {t("navbar.About")}
+        </li>
+        <li className="border-b-2 border-zinc-300 w-full pl-9">
+          {t("navbar.routes")}
+        </li>
+        <li className="border-b-2 border-zinc-300 w-full pl-9">
+          {t("navbar.contact")}
+        </li>
         <div className="flex my-5 mx-9">
-          <button className="h-[40px] w-full hover:bg-opacity-75">
-            Sign In
-          </button>
+          {user ? (
+            <button
+              onClick={onLogout}
+              className="h-[40px] w-full  text-whte bg-red-700 hover:bg-button-color hover:text-white hover:border-none"
+            >
+              {t("navbar.signOut")}
+            </button>
+          ) : (
+            <>
+              <button className="h-[40px] w-full text-yellow-400 bg-cyan-700 hover:bg-button-color hover:text-white hover:border-none">
+                {t("navbar.signIn")}
+              </button>
+            </>
+          )}
         </div>
       </ul>
     </div>
   );
 }
 
-export default Navbar;
+export default withTranslation()(NavHeader);

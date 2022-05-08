@@ -5,8 +5,9 @@ import { logout, reset } from '../features/auth/authSlice'
 import logo from '../images/logo.png';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import SelectLanguage from './SelectLanguage';
+import { withTranslation } from 'react-i18next';
 
-function NavHeader() {
+function NavHeader({t}) {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { user } = useSelector((state) => state.auth)
@@ -36,24 +37,24 @@ function NavHeader() {
                 <li>
                     <Link to='/'>
                     <a
-                    >Home</a
+                    >{t('navbar.home')}</a
                     >
                     </Link>
                 </li>
-                <li>About</li>
-                <li>Routes</li>
-                <li>Contact Us</li>
+                <li>{t('navbar.About')}</li>
+                <li>{t('navbar.routes')}</li>
+                <li>{t('navbar.contact')}</li>
               </ul>
             </div>
             <div className="hidden md:flex h-[30px] pr-[70px]">
                 {user ? (
                   <button onClick={onLogout} className="w-[90px] border-white text-whte bg-red-700 hover:bg-button-color hover:text-white hover:border-none">
-                  Log Out
+                  {t('navbar.signOut')}
                 </button>
                 ) : (
                   <>
                     <button className="w-[90px] border-white text-white bg-cyan-700 hover:bg-button-color hover:text-white hover:border-none">
-                      Log In
+                    {t('navbar.signIn')}
                     </button>
                   </>
                 )}
@@ -79,19 +80,19 @@ function NavHeader() {
             : 'absolute ] w-full text-white font-bold bg-[#000000] bg-opacity-[50%]'
         }
       >
-        <li className="border-y-2 border-zinc-300 w-full pl-9">Home</li>
-        <li className="border-b-2 border-zinc-300 w-full pl-9">About</li>
-        <li className="border-b-2 border-zinc-300 w-full pl-9">Routes Us</li>
-        <li className="border-b-2 border-zinc-300 w-full pl-9">Contact Us</li>
+        <li className="border-y-2 border-zinc-300 w-full pl-9">{t('navbar.home')}</li>
+        <li className="border-b-2 border-zinc-300 w-full pl-9">{t('navbar.About')}</li>
+        <li className="border-b-2 border-zinc-300 w-full pl-9">{t('navbar.routes')}</li>
+        <li className="border-b-2 border-zinc-300 w-full pl-9">{t('navbar.contact')}</li>
         <div className="flex my-5 mx-9">
           {user ? (
                   <button onClick={onLogout} className="h-[40px] w-full  text-whte bg-red-700 hover:bg-button-color hover:text-white hover:border-none">
-                  Log Out
+                  {t('navbar.signOut')}
                 </button>
                 ) : (
                   <>
                     <button className="h-[40px] w-full text-yellow-400 bg-cyan-700 hover:bg-button-color hover:text-white hover:border-none">
-                      Log In
+                    {t('navbar.signIn')}
                     </button>
                   </>
                 )}
@@ -101,4 +102,4 @@ function NavHeader() {
   );
 }
 
-export default NavHeader
+export default withTranslation()(NavHeader)

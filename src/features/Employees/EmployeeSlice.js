@@ -56,17 +56,26 @@ export const updateEmployee = createAsyncThunk(
    initialState: {
      employees: [],
      status: null,
+     isLoading: false,
+     isSuccess: false,
+     isRejected:false,
+     message: ''
    },
    extraReducers: {
      [addEmployee.pending]: (state, action) => {
        state.status = "loading";
+       state.isLoading = true
      },
      [addEmployee.fulfilled]: (state, action) => {
        state.status = "success";
+       state.isLoading= false
+       state.isSuccess= true
        state.employees.push(action.payload);
      },
      [addEmployee.rejected]: (state, action) => {
        state.status = "failed";
+       state.isLoading= false;
+       state.isRejected=true;
      },
      [fetchAsyncEmployees.pending]: (state, action) => {
        state.status = "loading";
