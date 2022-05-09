@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
+import { withTranslation } from 'react-i18next';
 
-const NotFound = () => {
+const NotFound = ({t}) => {
   return (
     <div className='relative bg-white '>
             <div className="max-w-7xl mx-auto">
@@ -12,15 +13,15 @@ const NotFound = () => {
                         <p
                             className="mb-2 text-2xl font-bold text-center text-gray-800 md:text-3xl"
                         >
-                            <span className="text-red-500">Uh oh!</span> This page does not exist.
+                            <span className="text-red-500">Uh oh!</span>{t('notFound.span')}
                         </p>
                         <p className="mb-8 text-center text-gray-500 md:text-lg">
-                            But dont worry, you can find plenty of other things on our homepage.
+                            {t('notFound.p')}
                         </p>
                         <Link to='/'>
                             <a
                                 className="px-6 py-2 text-sm font-semibold text-blue-800 bg-blue-100"
-                            >Go home</a
+                            >{t('notFound.link')}</a
                             >
                         </Link>
                     </div>
@@ -30,4 +31,4 @@ const NotFound = () => {
   )
 }
 
-export default NotFound;
+export default withTranslation()(NotFound);

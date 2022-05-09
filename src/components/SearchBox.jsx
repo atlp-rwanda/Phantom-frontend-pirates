@@ -6,8 +6,9 @@ import { getViewBus } from '../features/viewBus/ViewBusSlice';
 import ViewBus from './ViewBus';
 import { useNavigate } from 'react-router-dom';
 import FindBUsButtonSpinner from './FindBUsButtonSpinner';
+import { withTranslation } from 'react-i18next';
 
-const SearchBox = () => {
+const SearchBox = ({t}) => {
   const [source, setSource] = useState('');
   const [destination, setDestination] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +47,7 @@ const SearchBox = () => {
     >
       <div className="flex md:justify-start justify-center ">
         <p className="relative text-white  pt-4 md:pl-[9%] mb-[-12px] font-bold italic mt-16 md:mt-0">
-          How far is the bus
+        {t('searchBox.pTag1')}
         </p>
       </div>
       <div className="grid grid-cols-1 gap-y-5 place-items-center md:flex md:flex-wrap md:justify-center md:gap-5 pt-10 italic">
@@ -81,4 +82,4 @@ const SearchBox = () => {
   );
 };
 
-export default SearchBox;
+export default withTranslation()(SearchBox);

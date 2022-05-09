@@ -1,4 +1,17 @@
-import phantomApi from '../../api/api';
+import Cookies from 'universal-cookie'
+import phantomApi from '../../api/api'
+
+const cookies = new Cookies();
+// Register user
+const register = async (userData) => {
+    const { firstname, lastname, email } = userData;
+    const response = await phantomApi.post("employees/3",{firstname,lastname,email})
+   /*  if(response.data) {
+        localStorage.setItem('user', JSON.stringify(response.data))
+    } */
+
+    return response.data
+}
 
 // Login user
 const login = async (userData) => {
@@ -24,6 +37,8 @@ const logout = () => {
 const authService = {
   logout,
   login,
+  register,
+
 }
 
 export default authService 
