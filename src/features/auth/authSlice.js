@@ -6,7 +6,6 @@ import Cookies from 'universal-cookie'
 
 // Get user from localStorage
 const user = JSON.parse(localStorage.getItem('user'))
-const cookies = new Cookies();
 
 const initialState = {
   user: user ? user : null,

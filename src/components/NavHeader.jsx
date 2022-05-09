@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { logout, reset } from '../features/auth/authSlice'
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { reset } from '../features/auth/authSlice';
+import authService from '../features/auth/authService';
 import logo from '../images/logo.png';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import SelectLanguage from './SelectLanguage';
+
+const {logout} = authService;
 
 function NavHeader() {
   const navigate = useNavigate()

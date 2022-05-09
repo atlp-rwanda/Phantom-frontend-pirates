@@ -6,10 +6,11 @@ export const createRoute = createAsyncThunk(
   'routes/createRoute',
   async (routeData, thunkAPI) => {
     try {
-      console.log(routeData);
       const response = await phantomApi.post('api/routes', routeData,{
-      withCredentials: true,
-      headers: {'Access-Control-Allow-Origin': process.env.REACT_APP_BACKEND_URL, 'Content-Type': 'application/json'}
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json'
+      }
     });
       return response.data;
     } catch (error) {
