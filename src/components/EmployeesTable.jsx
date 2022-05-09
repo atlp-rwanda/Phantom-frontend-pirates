@@ -1,19 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-<<<<<<< HEAD
-=======
 import { useNavigate } from "react-router-dom";
->>>>>>> 004e0ebe6d3395a42f5e9914de4884f29db71c38
 import {
   fetchAsyncEmployees,
   getEmployees,
 } from "../features/Employees/EmployeeSlice";
-<<<<<<< HEAD
-import { updateEmployee } from "../features/Employees/EmployeeSlice";
-=======
 import { updateEmployee,deleteEmployee } from "../features/Employees/EmployeeSlice";
->>>>>>> 004e0ebe6d3395a42f5e9914de4884f29db71c38
 import FindBUsButtonSpinner from "./FindBUsButtonSpinner";
+
 const options = [
   {
     label: "select Role",
@@ -81,22 +75,19 @@ function EmployeesTable() {
   };
 
   console.log(employeeId);
-    setOption(null);
-    setIsLoading(true);
-    
+
+  function handleRemove(e) {
+  e.preventDefault();
+  const employeeData = {
+    employeeId
   };
-  const handleRemove = (e) => {
-    e.preventDefault();
-    const employeeData ={
-      employeeId
-    }
-      if (isSuccess) {
-        setShowModal(false);
-        navigate("/employees");
-      }
-    dispatch(deleteEmployee(employeeData));
-    
-  };
+  if (isSuccess) {
+    setShowModal(false);
+    navigate("/employees");
+  }
+  dispatch(deleteEmployee(employeeData));
+
+}
   const refreshPage = () => {
     window.location.reload(false);
   };
@@ -357,6 +348,6 @@ function EmployeesTable() {
       </>
     </div>
   );
-}
+                                  }                              
 
 export default EmployeesTable;

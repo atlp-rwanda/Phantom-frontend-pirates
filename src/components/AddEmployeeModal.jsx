@@ -20,7 +20,6 @@ const options = [
 
 const AddRouteModal = () => {
   const [showModal, setShowModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const firstRender = useRef(true);
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");

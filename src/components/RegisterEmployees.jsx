@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useSelector,useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {toast} from 'react-toastify';
-import {register, reset} from '../features/auth/authSlice'
+import {reset} from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
 const options = [
   {
