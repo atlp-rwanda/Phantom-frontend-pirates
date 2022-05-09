@@ -1,25 +1,16 @@
-import Cookies from 'universal-cookie'
-import phantomApi from '../../api/api'
-
-const cookies = new Cookies();
+import phantomApi from '../../api/api';
 
 // Login user
 const login = async (userData) => {
-  console.log(process.env.REACT_APP_BACKEND_URL);
   const response = await phantomApi.post('users/login', userData)
-  console.log(response.data);
   if (response.data) {
     if(response.data.adminToken){
-       cookies.set('jwt', response.data.adminToken);
-       console.log("admin");
+      localStorage.setItem('jwt', response.data.adminToken)
     }else if (response.data.operatorToken) {
-      cookies.set('jwt', response.data.operatorToken);
-      console.log("operator");
+      localStorage.setItem('jwt', response.data.operatorToken);
     } else {
-      cookies.set('jwt', response.data.driverToken);
-      console.log("driver");
+      localStorage.setItem('jwt', response.data.driverToken);
     }
-   
   }
 
   return response.data
@@ -27,7 +18,7 @@ const login = async (userData) => {
 
 // Logout user
 const logout = () => {
-  cookies.remove('user');
+  localStorage.removeItem('user');
 }
 
 const authService = {
@@ -35,4 +26,4 @@ const authService = {
   login,
 }
 
-export default authService
+export default authService 
