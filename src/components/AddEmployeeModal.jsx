@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch,useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { addEmployee } from "../features/Employees/EmployeeSlice";
 import FindBUsButtonSpinner from "./FindBUsButtonSpinner";
 
 const options = [
+  {label: "Select option",
+   value: 0
+  },
   {
     label: "Operator",
     value: 2,
@@ -30,7 +34,8 @@ const AddRouteModal = () => {
     "focus:outline-none transition duration-150 ease-in-out bg-cyan-700 text-white bg-white rounded text-cyan-700 font-bold px-8 py-2 text-sm bg-opacity-[80%]";
 
   const dispatch = useDispatch();
-  const { isSuccess } = useSelector((state) => state.employees);
+  const navigate = useNavigate();
+  const { isLoading,isError, isSuccess,message } = useSelector((state) => state.employees);
 
 
   const [disable, setDisabled] = useState(true);
@@ -40,12 +45,17 @@ const AddRouteModal = () => {
       firstRender.current = false;
       return;
     }
-    if(isSuccess){
-      setShowModal(false)
+    if (isSuccess) {
+      setShowModal(false);
+      navigate("/employees");
     }
     setDisabled(formValidation());
     dispatch(addEmployee);
-  }, [firstname,lastname,email,option]);
+  }, [
+    firstname,
+    lastname,
+    email,
+    option,isError, isSuccess, message, navigate],);
 
   const formValidation = () => {
     if (firstname === "") {
@@ -66,6 +76,9 @@ const AddRouteModal = () => {
   };
   const handleChange = (e) => {
     setOption(e.target.value);
+  };
+  const refreshPage = () =>{
+    window.location.reload(false);
   };
 
   const onSubmit = (e) => {
@@ -254,6 +267,7 @@ const AddRouteModal = () => {
                           type="submit"
                           className="focus:outline-none transition duration-150 ease-in-out hover:bg-cyan-700 hover:text-white bg-white rounded text-cyan-700 font-bold px-8 py-2 text-sm"
                           disabled={disable}
+                          /* onClick={refreshPage} */
                         >
                           Register
                         </button>

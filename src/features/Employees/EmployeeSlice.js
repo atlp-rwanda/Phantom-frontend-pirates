@@ -51,6 +51,24 @@ export const updateEmployee = createAsyncThunk(
     }
   }
 )
+export const deleteEmployee = createAsyncThunk(
+  "employee/deleteEmployee",
+  async(employeeData,thunkAPI) =>{
+    const {employeeId} = employeeData
+    try {
+      const response = await phantomApi.delete(`employees/${employeeId}`);
+      return response.data
+      } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+)
  const employeeSlice = createSlice({
    name: "employees",
    initialState: {
@@ -58,24 +76,24 @@ export const updateEmployee = createAsyncThunk(
      status: null,
      isLoading: false,
      isSuccess: false,
-     isRejected:false,
-     message: ''
+     isRejected: false,
+     message: "",
    },
    extraReducers: {
      [addEmployee.pending]: (state, action) => {
        state.status = "loading";
-       state.isLoading = true
+       state.isLoading = true;
      },
      [addEmployee.fulfilled]: (state, action) => {
        state.status = "success";
-       state.isLoading= false
-       state.isSuccess= true
+       state.isLoading = false;
+       state.isSuccess = true;
        state.employees.push(action.payload);
      },
      [addEmployee.rejected]: (state, action) => {
        state.status = "failed";
-       state.isLoading= false;
-       state.isRejected=true;
+       state.isLoading = false;
+       state.isRejected = true;
      },
      [fetchAsyncEmployees.pending]: (state, action) => {
        state.status = "loading";
@@ -97,10 +115,24 @@ export const updateEmployee = createAsyncThunk(
      [updateEmployee.rejected]: (state, action) => {
        state.status = "failed";
      },
+     [deleteEmployee.pending]: (state, action) => {
+       state.status = "loading";
+     },
+     [deleteEmployee.fulfilled]: (state, action) => {
+       state.status = "success";
+        state.isLoading = false;
+        state.isSuccess = true;
+       state.employees.push(action.payload);
+     },
+     [deleteEmployee.rejected]: (state, action) => {
+       state.status = "failed";
+       state.isRejected= true;
+     },
    },
  });
 
  export const addEmployees = (state) => state.employees;
  export const getEmployees = (state) => state.employees;
  export const updateEmployees = (state) => state.employees;
+ export const deleteEmployees = (state) => state.employees;
  export default employeeSlice.reducer;
