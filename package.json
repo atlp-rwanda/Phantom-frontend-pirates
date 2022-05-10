@@ -24,7 +24,6 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.16.7",
-    "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-react": "^7.16.7",
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^13.0.0",
@@ -54,6 +53,7 @@
     "@babel/core": "^7.17.8",
     "@babel/preset-env": "^7.16.11",
     "@babel/runtime": "^7.17.9",
+    "@babel/plugin-transform-runtime": "^7.17.0",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@heroicons/react": "^1.0.6",
