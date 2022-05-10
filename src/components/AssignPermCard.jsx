@@ -16,10 +16,11 @@ const AssignDeletePermCard = (props) => {
   const [role, setRole] = useState();
   const [permission, setPermission] = useState();
 
-  const { isLoading, message, isSuccess, isRejected } = useSelector(
+  const { isLoading, message, isRejected } = useSelector(
     (state) => state.rolesPermissions
   );
 
+  const isSuccess = useSelector(getSuccess);
   const roles = useSelector(getRoles);
   const permissions = useSelector(getPermissions);
   const dispatch = useDispatch();
@@ -46,8 +47,8 @@ const AssignDeletePermCard = (props) => {
     if (isSuccess) {
       setShowModal(false);
       Swal.fire(`${message}`, '', 'success');
-    }
-    if (isRejected) Swal.fire(`${message}`, '', 'error');
+      window.location.reload(true);
+    } else if (isRejected) Swal.fire(`${message}`, '', 'error');
   }, [dispatch, isSuccess, isRejected]);
 
   const buttonSpinnerClass =

@@ -173,4 +173,5 @@ export const getRoles = (state) => state.rolesPermissions.roles;
 export const getAssignedPermRole = (state) =>
   state.rolesPermissions.assignedPermRole;
 export const getPermissions = (state) => state.rolesPermissions.permissions;
+export const getSuccess = (state) => state.rolesPermissions.isSuccess;
 export default roleSlice.reducer;

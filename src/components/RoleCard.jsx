@@ -12,15 +12,16 @@ import Swal from 'sweetalert2';
 
 const RoleCard = () => {
   const [showModal, setShowModal] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
-  const [role, setRole] = useState('');
+  const [showPermModal, setShowPermModal] = useState(false);
+  const [role_Id, setRole_Id] = useState();
+  const [role_name, setRole_name] = useState();
 
   const buttonSpinnerClass =
     'focus:outline-none transition duration-150 ease-in-out bg-cyan-700 text-white bg-white rounded text-cyan-700 font-bold px-8 py-2 text-sm bg-opacity-[80%]';
 
   const dispatch = useDispatch();
   const roles = useSelector(getRoles);
-  const assignedPermRole = useSelector(getAssignedPermRole);
+  const rolePerm = useSelector(getAssignedPermRole);
 
   const { isLoading, message, isSuccess, isRejected } = useSelector(
     (state) => state.rolesPermissions
@@ -30,8 +31,16 @@ const RoleCard = () => {
     dispatch(fetchAsyncCreateRole(roleName));
   };
 
+  const fetchPerm = (roleId, roleName) => {
+    setShowPermModal(true);
+    setRole_Id(roleId);
+    setRole_name(roleName);
+    dispatch(fetchAsyncAssignedPerm(roleId));
+  };
+
   useEffect(() => {
     dispatch(fetchAsyncRoles());
+
     if (isSuccess) {
       setShowModal(false);
       Swal.fire(`${message}`, '', 'success');
@@ -119,7 +128,9 @@ const RoleCard = () => {
                                     ) : (
                                       <button
                                         className="focus:outline-none transition duration-150 ease-in-out hover:bg-cyan-700 hover:text-white bg-white rounded text-cyan-700 font-bold px-8 py-2 text-sm"
-                                        onClick={() => addRoleHundler('admin')}
+                                        onClick={() =>
+                                          addRoleHundler(role_name)
+                                        }
                                       >
                                         Add Role
                                       </button>
@@ -218,20 +229,64 @@ const RoleCard = () => {
                           </td>
                           <td class="text-md text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                             <div>
-                              <select className="bg-black bg-opacity-[0%]  focus:outline-none focus:cursor-pointer text-xl">
-                                <option>permissions</option>
-                                {assignedPermRole &&
-                                  assignedPermRole.map((permission, index) => (
-                                    <>
-                                      <option
-                                        className=" bg-[#000000] bg-opacity-[50%] text-white focus:bg-gray-100"
-                                        key={index}
-                                      >
-                                        create role
-                                      </option>
-                                    </>
-                                  ))}
-                              </select>
+                              <p
+                                className="cursor-pointer"
+                                onClick={() => {
+                                  fetchPerm(role.id, role.role);
+                                }}
+                              >
+                                view permission
+                              </p>
+                              {/* open modal */}
+                              {showPermModal ? (
+                                <div className="justify-center items-center flex overflow-x-hidden bg-indigo-200 bg-opacity-50 overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                                  <div className="relative w-[30%] my-6 mx-auto max-w-3xl">
+                                    <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                                      <div className="relative py-8 px-5 md:px-10 bg-white shadow-md rounded border border-gray-400">
+                                        <h1 className="text-2xl text-cyan-700 font-bold">
+                                          {role_name} Permissions
+                                        </h1>
+
+                                        {rolePerm[0] &&
+                                          rolePerm[0].map((res) => (
+                                            <p className="text-lg leading-loose">
+                                              {res.perm_name}
+                                            </p>
+                                          ))}
+
+                                        <div className="flex items-center justify-start w-full mt-8">
+                                          <button
+                                            type="button"
+                                            onClick={() =>
+                                              setShowPermModal(false)
+                                            }
+                                            className="focus:outline-none transition duration-150 ease-in-out hover:bg-cyan-700 hover:text-white bg-white rounded text-cyan-700 font-bold px-8 py-2 text-sm"
+                                            onclick="modalHandler()"
+                                          >
+                                            Ok
+                                          </button>
+                                        </div>
+                                        <div
+                                          className="cursor-pointer absolute top-0 right-0 mt-4 mr-5 text-gray-400 hover:text-gray-600 transition duration-150 ease-in-out"
+                                          onclick="modalHandler()"
+                                        >
+                                          <button
+                                            className="bg-transparent border-0 text-black float-right"
+                                            onClick={() =>
+                                              setShowPermModal(false)
+                                            }
+                                          >
+                                            <span className="text-black opacity-7 h-6 w-6 text-xl block bg-white py-0">
+                                              x
+                                            </span>
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              ) : null}
+                              {/* close modal  */}
                             </div>
                           </td>
                           <td class="text-md text-gray-900 font-light px-6 py-4 whitespace-nowrap">

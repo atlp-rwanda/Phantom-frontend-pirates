@@ -16,7 +16,7 @@ const DeletePermCard = (props) => {
   const [role, setRole] = useState();
   const [permission, setPermission] = useState();
 
-  const { isLoading, message, isSuccess, isRejected } = useSelector(
+  const { isLoading, message, isRejected, isSuccess } = useSelector(
     (state) => state.rolesPermissions
   );
 
@@ -46,8 +46,8 @@ const DeletePermCard = (props) => {
     if (isSuccess) {
       setShowModal(false);
       Swal.fire(`${message}`, '', 'success');
-    }
-    if (isRejected) {
+      window.location.reload(true);
+    } else if (isRejected) {
       Swal.fire(`${message}`, '', 'error');
       setShowModal(false);
     }
