@@ -12,11 +12,11 @@ function SlideBar() {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
 
-  // useEffect(() => {
-  //   if (!user?.admin) {
-  //     // navigate('/login')
-  //   }
-  // }, [user]);
+  useEffect(() => {
+    if (!(user && user.user.role === 'operator')) {
+      navigate('/')
+    }
+  }, [user]);
 
   return (
     <div id="Main" className={` bg-white transform  xl:translate-x-0 ease-in-out transition duration-500 flex justify-start items-start w-full sm:w-72   flex-col h-full`}>
@@ -68,28 +68,6 @@ function SlideBar() {
             </p>
           </div>
         </button>
-
-        <button className="flex justify-start items-center space-x-6 hover:text-white focus:outline-none focus:bg-indigo-700 focus:text-white bg-white border-none hover:bg-cyan-700 text-gray-600 rounded py-3 pl-4  w-full ">
-          <div className="flex">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-              />
-            </svg>
-            <p className="text-base leading-4 ml-2 ">
-              <Link to="/employees">Employees</Link>
-            </p>
-          </div>
-        </button>
       </div>
       <div className="w-full px-4">
         <hr className=" border-gray-100 w-full" />
@@ -104,8 +82,8 @@ function SlideBar() {
           <img src="https://i.ibb.co/fxrbS6p/Ellipse-2-2.png" alt="avatar" />
         </div>
         <div className="flex flex-col justify-start items-start space-y-2">
-          <p className="cursor-pointer text-base leading-4 text-black">{user ? user.user.firstname: 'no user'}</p>
-          <p className="cursor-pointer text-xs leading-3 text-black">{user ? user.user.email: 'none'}</p>
+          <p className="cursor-pointer text-base leading-4 text-black">Alexis Enache</p>
+          <p className="cursor-pointer text-xs leading-3 text-black">alexis _enache@gmail.com</p>
         </div>
         <button aria-label="visit" className=" focus:ring-2 focus:outline-none p-2.5 bg-white text-black border-none rounded-full">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

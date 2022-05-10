@@ -4,6 +4,9 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
 import LandingPage from './container/LandingPage';
 import Login from "./container/Login";
+import Admin from "./container/Admin";
+import DriverMenu from "./container/DriverMenu";
+import OperatorPage from "./container/OperatorPage";
 import { NotFound } from './components';
 import ViewBus from './components/ViewBus';
 import Notifications from './container/Notifications';
@@ -24,6 +27,9 @@ const App = () => {
           <Route path='/routes' element={<Rout />} />
           <Route path="/employees" element={<Employees />} />
           <Route path="/register" element={<Registering/>}/>
+          <Route path="/admin" element={<Admin/>}/>
+          <Route path="/operator" element={<OperatorPage/>}/>
+          <Route path="/driver" element={<DriverMenu/>}/>
         </Routes>
         <ToastContainer />
       </React.StrictMode>

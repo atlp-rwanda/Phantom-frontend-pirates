@@ -32,10 +32,10 @@ function EmployeesTable() {
   const [employeeId, setEmployeeId] = useState(null);
   const [deleteModal,setdeleteModal] =useState(false)
  
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   const { employees } = useSelector(getEmployees);
-  useEffect(() => {
   
+  useEffect(() => {
     dispatch(fetchAsyncEmployees());
   }, [dispatch,navigate]);
 
@@ -43,8 +43,6 @@ function EmployeesTable() {
     "focus:outline-none transition duration-150 ease-in-out bg-cyan-700 text-white bg-white rounded text-cyan-700 font-bold px-8 py-2 text-sm bg-opacity-[80%]";
 
   const dispatch = useDispatch();
-
-  const [disable, setDisabled] = useState(true);
 
   useEffect(() => {
     if (firstRender.current) {
@@ -54,28 +52,17 @@ function EmployeesTable() {
     dispatch(updateEmployee);
   }, [option]);
 
-  /* const handleChange = (e) => {
-    setOption(e.target.value);
-  }; */
-
   const onSubmit = (e) => {
     e.preventDefault();
     const employeeData = {
       option,
       employeeId,
     };
-    console.log(option);
     dispatch(updateEmployee(employeeData));
     /* setIsLoading(true); */
     setOption(null);
   };
-  const modal = () => {
-    setShowModal(true);
-    console.log(employee);
-  };
-
-  console.log(employeeId);
-
+  
   function handleRemove(e) {
   e.preventDefault();
   const employeeData = {

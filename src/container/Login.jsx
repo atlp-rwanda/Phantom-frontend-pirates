@@ -47,8 +47,11 @@ const Login = ({t}) => {
     if (isError) {
       toast.error(message)
     }
-    if (isSuccess || user) {
-      navigate('/routes')
+    if (user) {
+      let {role} = user.user
+      role === 'admin' ? navigate('/admin')
+        : role === 'operator' ? navigate('/operator')
+        : navigate('/driver')
     }
   }, [user, isError, isSuccess, message, navigate, dispatch])
 
