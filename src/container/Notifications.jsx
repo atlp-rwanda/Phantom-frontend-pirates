@@ -1,10 +1,11 @@
 import React, {useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { withTranslation } from 'react-i18next';
 
 import { NavHeader } from '../components'
 
-function Notifications() {
+function Notifications({t}) {
     const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -25,11 +26,11 @@ function Notifications() {
                 <NavHeader />
             </div>
             <div className="flex-1 h-full text-center max-w-6xl mx-auto rounded-lg">
-              <h1>Notifications</h1>
+            <h1>{t('notifications.notf')}</h1>
               </div>
         </div>
     </> 
   )
 }
 
-export default Notifications
+export default withTranslation()(Notifications);
