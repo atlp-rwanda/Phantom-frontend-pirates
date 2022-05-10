@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import phantomApi from '../../api/api';
 
+const token = localStorage.getItem('jwt');
+const Authorization = `Bearer ${token}`;
+
 export const fetchAsyncRoles = createAsyncThunk(
   'roles/fetchAsyncRoles',
   async (dispatch, getState) => {
@@ -30,10 +33,10 @@ export const fetchAsyncCreateRole = createAsyncThunk(
   async (roleName, thunkAPI) => {
     try {
       const response = await phantomApi.post('api/role', roleName, {
-        withCredentials: true,
         headers: {
           'Access-Control-Allow-Origin': process.env.REACT_APP_BACKEND_URL,
           'Content-Type': 'application/json',
+          Authorization,
         },
       });
       return response.data;
@@ -101,6 +104,13 @@ const roleSlice = createSlice({
     isRejected: false,
     message: '',
   },
+
+  reducers: {
+    clearAssignedPerm: (state) => {
+      state.assignedPermRole = [];
+    },
+  },
+
   extraReducers: {
     //create role
     [fetchAsyncCreateRole.pending]: (state, { payload }) => {
@@ -169,6 +179,7 @@ const roleSlice = createSlice({
   },
 });
 
+export const { clearAssignedPerm } = roleSlice.actions;
 export const getRoles = (state) => state.rolesPermissions.roles;
 export const getAssignedPermRole = (state) =>
   state.rolesPermissions.assignedPermRole;

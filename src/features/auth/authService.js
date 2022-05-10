@@ -1,35 +1,29 @@
-import axios from 'axios'
-import Cookies from 'universal-cookie'
-import phantomApi from '../../api/api'
-
-const cookies = new Cookies();
+import phantomApi from '../../api/api';
 
 // Login user
 const login = async (userData) => {
-  console.log(process.env.REACT_APP_BACKEND_URL);
-  const response = await phantomApi.post('users/login', userData)
-  console.log(response.data);
+  const response = await phantomApi.post('users/login', userData);
   if (response.data) {
-    if(response.data.adminToken){
-       cookies.set('jwt', response.data.adminToken);
-    }else if (response.data.operatorToken) {
-      cookies.set('jwt', response.data.operatorToken);
+    if (response.data.adminToken) {
+      localStorage.setItem('jwt', response.data.adminToken);
+    } else if (response.data.operatorToken) {
+      localStorage.setItem('jwt', response.data.operatorToken);
     } else {
-      cookies.set('jwt', response.data.driverToken);
+      localStorage.setItem('jwt', response.data.driverToken);
     }
-   
   }
 
-  return response.data
-}
+  return response.data;
+};
+
 // Logout user
 const logout = () => {
-  cookies.remove('user');
-}
+  localStorage.removeItem('user');
+};
 
 const authService = {
   logout,
   login,
-}
+};
 
-export default authService
+export default authService;
