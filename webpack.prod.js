@@ -46,7 +46,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        REACT_APP_BACKEND_URL: JSON.stringify(process.env.REACT_APP_BACKEND_URL),
+        PHANTOM_API: JSON.stringify(process.env.PHANTOM_API),
       },
     }),
   ],
