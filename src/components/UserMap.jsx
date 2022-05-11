@@ -5,8 +5,10 @@ import ReactTooltip from 'react-tooltip';
 import { ToastContainer } from 'react-toastify';
 
 import SkeletonSimulator from './SkeletonSimulator';
-import { notifyInfo } from '../utils/Notifications';
+import { notifyInfo, notifySuccess } from '../utils/Notifications';
 import LeafMap from './LeafMap';
+
+
 
 const UserMap = ({ t }) => {
 
@@ -14,22 +16,32 @@ const UserMap = ({ t }) => {
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [distance, setDistance] = useState('');
   const [duration, setDuration] = useState('');
-  /* useEffect(() => {
-    console.log('==Duration:', duration)
-    console.log('==Distance:', distance)
-  }, [distance, duration]) */
+  const [source, setSource] = useState('');
+  const [destination, setDestination] = useState('');
 
-  const originRef = useRef();
+
+  const originRef = useRef()
   const destinationRef = useRef();
 
-  async function calculateRoute() {
+  const calculateRoute = () => {
     /* if there is no input */
-    if (originRef.current.value === '' || destinationRef.current.value === '') {
+    if (originRef.current.value === 'Choose Source' || destinationRef.current.value === 'Choose Destination') {
       return notifyInfo('You have to select Source and Destination');
     }
-    /* direction service */
+
+    else if (originRef.current.value === destinationRef.current.value) {
+      return notifyInfo('You have to select different Source and Destination');
+    }
+
+    else {
+      //notifySuccess('We are tracing you route');
+      setSource(originRef.current.value)
+      setDestination(destinationRef.current.value)
+    }
 
   }
+
+  
   //TODO: set up a clear button
   const clearRoute = () => {
     setDirectionsResponse(null);
@@ -38,8 +50,6 @@ const UserMap = ({ t }) => {
     originRef.current.value = ''
     destinationRef.current.value = ''
   }
-
-
 
   return (
     <section className="max-w-full md:w-5/6 mx-auto">
@@ -93,8 +103,8 @@ const UserMap = ({ t }) => {
                 ref={originRef}
               >
                 <option defaultValue="" selected disabled>Choose Source</option>
-                <option value="Downtown Building">Downtown Building</option>
-                <option value="Nyabugogo Bus parking">Nyabugogo Bus parking</option>
+                <option value="Downtown Bus park">Downtown Bus park</option>
+                <option value="Nyabugogo Bus park">Nyabugogo Bus park</option>
                 <option value="Kacyiru Bus Park">Kacyiru Bus Park</option>
                 <option value="Remera Bus park">Remera Bus park</option>
               </select>
@@ -112,8 +122,8 @@ const UserMap = ({ t }) => {
                 ref={destinationRef}
               >
                 <option defaultValue="" selected disabled>Choose Destination</option>
-                <option value="Downtown Building">Downtown Building</option>
-                <option value="Nyabugogo Bus parking">Nyabugogo Bus parking</option>
+                <option value="Downtown Bus park">Downtown Bus park</option>
+                <option value="Nyabugogo Bus park">Nyabugogo Bus park</option>
                 <option value="Kacyiru Bus Park">Kacyiru Bus Park</option>
                 <option value="Remera Bus park">Remera Bus park</option>
               </select>
@@ -146,16 +156,13 @@ const UserMap = ({ t }) => {
 
           </div>
 
-
-
-
         </div>
 
 
         {/* Map section */}
 
         <div className="ml-auto text-center w-full col-span-2 row-span-3 col-start-2 col-span-2">
-          <LeafMap />
+          <LeafMap source={source} destination={destination} />
         </div>
       </div>
 

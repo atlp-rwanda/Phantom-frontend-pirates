@@ -227,7 +227,6 @@ const Simulation = ({ t }) => {
                                 </div>
                             </div>
                         </div>
-                        {/* TODO:: Dropdown of source and destination */}
 
                         {/* Notifications section */}
                         <div className="flex justify-center space-x-3 m-10">
@@ -320,7 +319,6 @@ const Simulation = ({ t }) => {
                     </div>
                 </div>
             }
-
 
         </section >
     )
