@@ -1,10 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate, Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import logo from '../images/logo.png';
 import dirver from '../images/truck-driver.svg';
 import bus from '../images/bus-alt.svg';
 import home from '../images/home.svg';
 import road from '../images/road.svg';
+import { logout, reset } from '../features/auth/authSlice';
 function SlideBar() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { user } = useSelector((state) => state.auth)
+
+  const onLogout = () => {
+    dispatch(logout())
+    dispatch(reset())
+    navigate('/')
+  }
+
   return (
     <div id="Main" className={` bg-white transform  xl:translate-x-0 ease-in-out transition duration-500 flex justify-start items-start w-full sm:w-72   flex-col h-full`}>
               <div>
@@ -19,8 +32,16 @@ function SlideBar() {
                   <p className="text-base leading-4 ">Dashboard</p>
                 </button>
                 <button className="focus:outline-none flex jusitfy-start hover:text-white bg-white border-none hover:bg-cyan-700 text-gray-600 rounded py-3 pl-4  items-center w-full  space-x-6">
+                <img alt="/" className="w-8" />
+                  <p className="text-base leading-4  ">
+                    <Link to="/company">Companies</Link>
+                  </p>
+                </button>
+                <button className="focus:outline-none flex jusitfy-start hover:text-white bg-white border-none hover:bg-cyan-700 text-gray-600 rounded py-3 pl-4  items-center w-full  space-x-6">
                 <img src={bus} alt="/" className="w-8" />
-                  <p className="text-base leading-4 ">Buses</p>
+                <p className="text-base leading-4  ">
+                    <Link to="/bus">Buses</Link>
+                  </p>
                 </button>
                 <button className="focus:outline-none flex justify-start items-center space-x-6 hover:text-white bg-white border-none hover:bg-cyan-700 text-gray-600 rounded  py-3 pl-4  w-full ">
                   <img src={dirver} alt="/" className="w-10" />
@@ -28,7 +49,9 @@ function SlideBar() {
                 </button>
                 <button className="flex justify-start items-center space-x-6 hover:text-white focus:outline-none focus:bg-indigo-700 focus:text-white bg-white border-none hover:bg-cyan-700 text-gray-600 rounded py-3 pl-4  w-full ">
                 <img src={road} alt="/" className="w-8" />
-                  <p className="text-base leading-4  ">Routes</p>
+                  <p className="text-base leading-4  ">
+                  <Link to="/routes">Routes</Link>
+                  </p>
                 </button>
               </div>
               <div className="w-full px-4">
@@ -44,8 +67,8 @@ function SlideBar() {
                   <img src="https://i.ibb.co/fxrbS6p/Ellipse-2-2.png" alt="avatar" />
                 </div>
                 <div className="flex flex-col justify-start items-start space-y-2">
-                  <p className="cursor-pointer text-base leading-4 text-black">Alexis Enache</p>
-                  <p className="cursor-pointer text-xs leading-3 text-black">alexis _enache@gmail.com</p>
+                  <p className="cursor-pointer text-base leading-4 text-black">{user ? user.user.firstname: 'no user'}</p>
+                  <p className="cursor-pointer text-xs leading-3 text-black">{user ? user.user.email: 'none'}</p>
                 </div>
                 <button aria-label="visit" className=" focus:ring-2 focus:outline-none p-2.5 bg-white text-black border-none rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -54,7 +77,7 @@ function SlideBar() {
                 </button>
               </div>
               <div className="xl:mt-6 flex flex-col justify-start items-start  px-4 space-y-3 pb-5 ">
-                <button className="focus:outline-none flex jusitfy-center hover:text-white bg-white hover:bg-cyan-700 text-gray-600 rounded p-3 items-center space-x-6 w-full ">
+                <button onClick={onLogout}  className="focus:outline-none flex jusitfy-center hover:text-white bg-white hover:bg-cyan-700 text-gray-600 rounded p-3 items-center space-x-6 w-full ">
                     <p className="text-base leading-4 ">Logout</p>
                 </button>
               </div>

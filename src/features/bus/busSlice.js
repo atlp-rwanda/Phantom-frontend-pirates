@@ -4,11 +4,12 @@ const token = localStorage.getItem('jwt');
 const Authorization = `Bearer ${token}`;
 
 // Create new route
-export const createRoute = createAsyncThunk(
-  'routes/createRoute',
-  async (routeData, thunkAPI) => {
+export const createBus = createAsyncThunk(
+  'buses/createBus',
+  async (busData, thunkAPI) => {
+    const cid = busData.company;
     try {
-      const response = await phantomApi.post('api/routes', routeData,{
+      const response = await phantomApi.post('api/buses/'+cid+'/bus', busData,{
               headers: {'Access-Control-Allow-Origin': process.env.REACT_APP_BACKEND_URL, 'Content-Type': 'application/json',
               Authorization
             }});
@@ -26,25 +27,24 @@ export const createRoute = createAsyncThunk(
 );
 
 
-export const fetchAsyncRoutes = createAsyncThunk(
-  'routes/fetchAsyncRoutes',
+export const fetchAsyncBuses = createAsyncThunk(
+  'buses/fetchAsyncBuses',
   async () => {
-    const response = await phantomApi.get('api/routes');
+    const response = await phantomApi.get('api/buses');
+    console.log(response.data);
     return response.data;
   }
 );
 //update
-export const updateRoute = createAsyncThunk(
-  'routes/updateRoute',
-  async (routeData, thunkAPI) => {
-    const id = routeData.routeId;
+export const updateBus = createAsyncThunk(
+  'buses/updateBus',
+  async (busData, thunkAPI) => {
+    const id = busData.busId;
     try {
-      const response = await phantomApi.put('api/routes/'+id, routeData,{
+      const response = await phantomApi.put('api/buses/'+id, busData,{
         headers: {'Access-Control-Allow-Origin': process.env.REACT_APP_BACKEND_URL, 'Content-Type': 'application/json',
         Authorization
       }});
-      console.log('=====data------',routeData)
-      console.log("-----new1=====",response.data)
       return response.data;
       
     } catch (error) {
@@ -59,12 +59,12 @@ export const updateRoute = createAsyncThunk(
   }
 );
 //delete
-export const deleteRoute = createAsyncThunk(
-  'routes/deleteRoute',
-  async (routeData, thunkAPI) => {
-    const {routeId} = routeData
+export const deleteBus = createAsyncThunk(
+  'companies/deleteBus',
+  async (busData, thunkAPI) => {
+    const {busId} = busData
     try{
-    const response = await phantomApi.delete('api/routes/'+routeId,{
+    const response = await phantomApi.delete('api/buses/'+busId,{
       headers: {'Access-Control-Allow-Origin': process.env.REACT_APP_BACKEND_URL, 'Content-Type': 'application/json',
       Authorization
     }});
@@ -81,16 +81,15 @@ export const deleteRoute = createAsyncThunk(
 }
 );
 
-const routeSlice = createSlice({
-  name: 'routes',
+const busSlice = createSlice({
+  name: 'buses',
   initialState : {
-    routes: [],
+    buses: [],
     status: null,
     isLoading: false,
     isRejected: false,
     isSuccess: false,
-    isDelLoading: false,
-    isSuccessDelete: false,
+    isSuccessBusDelete: false,
     message: '',
   },
   reducers: {
@@ -98,80 +97,81 @@ const routeSlice = createSlice({
       state.isLoading = false
       state.isSuccess = false
       state.isRejected = false
+      state.isSuccessBusDelete = false
       state.message = ''
     },
   },
   extraReducers: {
-    [createRoute.pending]: (state, action) => {
+    [createBus.pending]: (state, action) => {
       state.status = 'loading';
       state.isLoading = true;
     },
-    [createRoute.fulfilled]: (state, action) => {
+    [createBus.fulfilled]: (state, action) => {
       state.status = 'success';
       state.isSuccess = true
       state.isLoading = false;
       state.message = action.payload;
-      state.routes = action.payload;
+      state.buses = action.payload;
     },
-    [createRoute.rejected]: (state, action) => {
+    [createBus.rejected]: (state, action) => {
       state.status = 'failed';
       state.isLoading=false;
       state.isRejected = true;
       state.message = action.payload;
     },
-    [updateRoute.pending]: (state, action) => {
+    [updateBus.pending]: (state, action) => {
       state.status = 'loading';
       state.isLoading = true;
     },
-    [updateRoute.fulfilled]: (state, action) => {
+    [updateBus.fulfilled]: (state, action) => {
       state.status = 'success';
       state.isSuccess = true;
       state.isLoading = false;
       state.message = action.payload;
-      state.routes = action.payload;
+      state.buses = action.payload;
     },
-    [updateRoute.rejected]: (state, action) => {
+    [updateBus.rejected]: (state, action) => {
       state.status = 'failed';
       state.isLoading=false;
       state.isRejected = true;
       state.message = action.payload;
     },
-    [fetchAsyncRoutes.pending]: (state, action) => {
-      //state.status = 'loading';
+    [fetchAsyncBuses.pending]: (state, action) => {
+      state.status = 'loading';
       state.isLoading = true;
     },
-    [fetchAsyncRoutes.fulfilled]: (state, { payload }) => {
-      //state.status = 'success';
-      state.isLoading = false;
-      state.routes = payload;
-    },
-    [fetchAsyncRoutes.rejected]: (state, action) => {
-      //state.status = 'failed';
-      state.isLoading = false;
-    },
-    [deleteRoute.pending]: (state) => {
-      state.status = 'loading';
-      state.isDelLoading = true;
-    },
-    [deleteRoute.fulfilled]: (state, action) => {
+    [fetchAsyncBuses.fulfilled]: (state, { payload }) => {
       state.status = 'success';
-      state.isSuccessDelete = true;
-      state.isDelLoading = false;
-      state.message = action.payload;
-      state.routes = action.payload.id;
+      state.isLoading = false;
+      state.buses = payload;
     },
-    [deleteRoute.rejected]: (state, action) => {
+    [fetchAsyncBuses.rejected]: (state, action) => {
       state.status = 'failed';
-      state.isDelLoading = false;
-      state.isSuccessDelete = false;
+      state.isLoading = false;
+    },
+    [deleteBus.pending]: (state) => {
+      state.status = 'loading';
+      state.isLoading = true;
+    },
+    [deleteBus.fulfilled]: (state, action) => {
+      state.status = 'success';
+      state.isSuccessBusDelete = true;
+      state.isLoading = false;
+      state.message = action.payload;
+      state.buses = action.payload.id;
+    },
+    [deleteBus.rejected]: (state, action) => {
+      state.status = 'failed';
+      state.isLoading = false;
+      state.isSuccessBusCompDelete = false;
       state.message = action.payload;
     },
   },
 });
 
-export const { reset } = routeSlice.actions;
-export const createRoutes = (state) => state.routes;
-export const getRoutes = (state) => state.routes;
-export const updateRoutes = (state) => state.routes;
-export const deleteRoutes = (state) => state.routes;
-export default routeSlice.reducer;
+export const { reset } = busSlice.actions;
+export const createBuses = (state) => state.buses;
+export const getBuses = (state) => state.buses;
+export const updateBuses = (state) => state.buses;
+export const deleteBuses = (state) => state.buses;
+export default busSlice.reducer;

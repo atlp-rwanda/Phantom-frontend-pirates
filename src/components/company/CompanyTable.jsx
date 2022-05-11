@@ -8,82 +8,57 @@ import Button from '@mui/material/Button';
 import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
 import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
-import { fetchAsyncRoutes,getRoutes,updateRoute,deleteRoute, reset } from '../features/Route/routeSlice';
-import FindBUsButtonSpinner from "./FindBUsButtonSpinner";
+import { fetchAsyncCompanies,getCompanies,updateCompanies,deleteCompany, reset } from '../../features/company/companySlice';
+import FindBUsButtonSpinner from "../FindBUsButtonSpinner";
 import Swal from 'sweetalert2';
 
-function RouteTable() {
+function CompanyTable() {
     const dispatch = useDispatch();
 
-    const { routes } = useSelector(getRoutes);
+    const { companies } = useSelector(getCompanies);
 
-    const { isLoading,isSuccessDelete, isSuccess } = useSelector(
-      (state) => state.routes
+    const { isLoading,isSuccessCompDelete, isSuccess } = useSelector(
+      (state) => state.companies
     )
     
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [open, setOpen] = React.useState(false);
     const [placement, setPlacement] = React.useState();
-    const [routeId, setRouteId] = useState(null);
-    const [routeSource, setRouteSource] = useState(null);
-    const [routeDestination, setRouteDestination] = useState(null);
-    const [routeDistance, setRouteDistance] = useState(null);
-    const [routeBusStop, setRouteBusStop] = useState(null);
+    const [companyId, setCompanyId] = useState(null);
+    const [companyName, setCompanyName] = useState(null);
+    const [companyEmail, setCompanyEmail] = useState(null);
     const [deleteModal,setdeleteModal] =useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [inputList, setInputList] = useState([{busStop:""}]);
     const buttonSpinnerClass =
     'focus:outline-none transition duration-150 ease-in-out bg-cyan-700 text-white bg-white rounded text-cyan-700 font-bold px-8 py-2 text-sm bg-opacity-[80%]';
 
-    const handleClick = (newPlacement,id,source,destination,distance,busStop) => (event) => {
-      setRouteId(id);
-      setRouteSource(source);
-      setRouteDestination(destination);
-      setRouteDistance(distance);
-      setRouteBusStop(busStop);
+    const handleClick = (newPlacement,id,name,email) => (event) => {
+      setCompanyId(id);
+      setCompanyName(name);
+      setCompanyEmail(email);
       setAnchorEl(event.currentTarget);
       setOpen((prev) => placement !== newPlacement || !prev);
       setPlacement(newPlacement);
     };
     const handleRemove = (e) => {
       e.preventDefault();
-      const routeData = {
-        routeId,
+      const companyData = {
+        companyId,
       };
-      dispatch(deleteRoute(routeData));
+      dispatch(deleteCompany(companyData));
       setShowModal(false)
     };
-    const handleChange = (index, e)=>{
     
-      const { value } = e.target;
-      const list = [...inputList];
-      list[index] = value;
-      setInputList(list);
-  }
-    const addInputField = (e)=>{
-      e.preventDefault();
-      setInputList([...inputList, {
-          busStop:'',
-      } ])
-    }
-  
-    const removeInputFields = (index)=>{
-      const rows = [...inputList];
-      rows.splice(index, 1);
-      setInputList(rows);
-    }
     //update
     const onSubmit = (e) => {
       e.preventDefault();
-      const routeData = {
-        routeId,
-        routeSource,
-        routeDestination, 
-        routeDistance,
-        routeBusStop
+      const companyData = {
+        companyId,
+        companyName,
+        companyEmail
       };
-      dispatch(updateRoute(routeData));
+      dispatch(updateCompanies(companyData));
       if(isSuccess)
       {
         Swal.fire('Successfully updated', '', 'success');
@@ -95,13 +70,13 @@ function RouteTable() {
 
     useEffect(() => {
       
-      if (isSuccessDelete) {
+      if (isSuccessCompDelete) {
         setShowModal(false)
         Swal.fire('deleted', '', 'success');
         dispatch(reset())
       }
-      dispatch(fetchAsyncRoutes());
-      }, [dispatch,isSuccess,isSuccessDelete]);
+      dispatch(fetchAsyncCompanies());
+      }, [dispatch,isSuccess,isSuccessCompDelete]);
     
   return (
     <div className='w-full'>
@@ -128,10 +103,10 @@ function RouteTable() {
                   <thead class="bg-white border-b">
                     <tr>
                       <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      Source
+                      Name
                       </th>
                       <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      Destination
+                      Email
                       </th>
                       <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                       Action
@@ -139,14 +114,14 @@ function RouteTable() {
                     </tr>
                   </thead>
                   <tbody>
-                    {routes?.routeobject && 
-                       routes?.routeobject?.map((route, index) => (
+                    {companies && 
+                       companies.map((comp, index) => (
                         <tr key={index} className="even:bg-white odd:bg-gray-100  border-b">
                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                          {route.source}
+                          {comp.name}
                         </td>
                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                          {route.destination}
+                          {comp.email}
                         </td>
                         <td>
                           <Box sx={{ width: 90 }} className='w-4'>
@@ -179,7 +154,7 @@ function RouteTable() {
                                 )}
                               </Popper>
                               <Grid container justifyContent="center">
-                                  <Button onClick={handleClick('left-start', route.id, route.source, route.destination, route.distance,route.busStop)
+                                  <Button onClick={handleClick('left-start', comp.id, comp.name, comp.email)
                                   
                                 } >
                                     <svg
@@ -200,13 +175,13 @@ function RouteTable() {
                           <div className="relative w-full my-6 mx-auto max-w-3xl">
                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                               <div className="relative py-8 px-5 md:px-10 bg-white shadow-md rounded border border-gray-400">
-                                <h1>UPDATE ROUTE <span className='text-xl font-bold'> {routeSource}-{routeDestination}</span></h1>
+                                <h1>UPDATE ROUTE <span className='text-xl font-bold'> {companyName}</span></h1>
                                 <form onSubmit={onSubmit}>
                                 <label
                       for="exampleEmail0"
                       className="form-label inline-block mb-2 text-gray-700"
                     >
-                      Source
+                      Name
                     </label>
                     <input
                       type="text"
@@ -227,21 +202,21 @@ function RouteTable() {
                               m-0
                               focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
                           "
-                      placeholder="Enter source"
-                      name="source"
-                      id="source"
-                      value={routeSource}
-                      onChange={(e) => setRouteSource(e.target.value)}
+                      placeholder="Enter name"
+                      name="name"
+                      id="name"
+                      value={companyName}
+                      onChange={(e) => setCompanyName(e.target.value)}
                     />
 
                     <label
                       for="exampleEmail0"
                       className="form-label inline-block mb-2 text-gray-700"
                     >
-                      Destination
+                      Email
                     </label>
                     <input
-                      type="text"
+                      type="email"
                       className="
                               form-control
                               block
@@ -259,105 +234,12 @@ function RouteTable() {
                               m-0
                               focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
                           "
-                      placeholder="Enter Destination"
-                      name="destination"
-                      id="destination"
-                      value={routeDestination}
-                      onChange={(e) => setRouteDestination(e.target.value)}
+                      placeholder="Enter Email"
+                      name="email"
+                      id="email"
+                      value={companyEmail}
+                      onChange={(e) => setCompanyEmail(e.target.value)}
                     />
-                    
-                    <label
-                      for="exampleEmail0"
-                      className="form-label inline-block mb-2 text-gray-700"
-                    >
-                      Distance
-                    </label>
-                    <input
-                      type="text"
-                      className="
-                              form-control
-                              block
-                              w-full
-                              px-3
-                              py-1.5
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              m-0
-                              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-                          "
-                      placeholder="Enter Distance"
-                      name="distance"
-                      id="distance"
-                      value={routeDistance}
-                      onChange={(e) => setRouteDistance(Number(e.target.value))}
-                    />
-                    <label
-                      for="exampleEmail0"
-                      className="form-label inline-block mb-2 text-gray-700"
-                    >
-                      Bus Stop
-                    </label>
-                    <div className='flex flex-row'>
-                      <div>
-                      {
-                        inputList.map((data, index)=>{
-                            const {stop}= data;
-                            return(
-                              <div className="row my-3 flex flex-row" key={index}>
-                                <div className="col">
-                                  <div className="form-group">
-                                    <input
-                                      type="text"
-                                      className="
-                                              form-control
-                                              block
-                                              w-full
-                                              px-3
-                                              py-1.5
-                                              text-base
-                                              font-normal
-                                              text-gray-700
-                                              bg-white bg-clip-padding
-                                              border border-solid border-gray-300
-                                              rounded
-                                              transition
-                                              ease-in-out
-                                              m-0
-                                              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-                                          "
-                                      name="busStop"
-                                      id="busstop"
-                                      value={routeBusStop}
-                                      onChange={(e)=>handleChange(index, e)} 
-                                      placeholder="Enter Bus stop"
-                                    />
-                                  </div>
-                                </div>
-                              
-                                <div className="w-1/12 ml-2.5">
-                                  {(inputList.length!==1)? <button className="bg-white text-red-700 w-full border-none" onClick={removeInputFields}>x</button>:''}
-                                </div>
-                              </div>
-                                        )
-                            })
-                        }
-                      </div>
-                      <div className="w-2/12">
-                            <div className="col-sm-12">
-                              <button className="mt-2.5 bg-white border-none" onClick={(e)=>addInputField(e)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-cyan-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                              </button>
-                            </div>
-                      </div>
-                    </div>
 
                                   <div className="flex items-center justify-start w-full mt-8">
                                     {isLoading ? (
@@ -408,11 +290,11 @@ function RouteTable() {
                         <div className="relative w-full my-6 mx-auto max-w-3xl">
                           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                             <div className="relative py-8 px-5 md:px-10 bg-white shadow-md rounded border border-gray-400">
-                              <h1>Delete Route</h1>
+                              <h1>Delete Company</h1>
                               <form onSubmit={handleRemove}>
                                 <p className="mt-2">
                                   {" "}
-                                  Are you sure you want to delete this Route <span className='text-xl font-bold'> {routeSource}-{routeDestination}</span>?
+                                  Are you sure you want to delete this Company <span className='text-xl font-bold'> {companyName}</span>?
                                 </p>
                                 <div className="flex items-center justify-start w-full mt-8">
                                 {isLoading ? (
@@ -465,4 +347,4 @@ function RouteTable() {
   )
 }
 
-export default RouteTable
+export default CompanyTable

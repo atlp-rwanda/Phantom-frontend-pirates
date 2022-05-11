@@ -47,8 +47,11 @@ const Login = ({t}) => {
     if (isError) {
       toast.error(message)
     }
-    if (isSuccess || user) {
-      navigate('/routes')
+    if (user) {
+      let {role} = user.user
+      role === 'admin' ? navigate('/admin')
+        : role === 'operator' ? navigate('/operator')
+        : navigate('/driver')
     }
   }, [user, isError, isSuccess, message, navigate, dispatch])
 
@@ -118,11 +121,11 @@ const Login = ({t}) => {
                                 <h5 className='p-2'>{message}</h5>
                                 }
                             </div>
-                            <div className="flex rounded-md shadow-sm mt-8 mb-6">
+                            <div className="flex rounded-md text-xl shadow-sm mt-8 mb-6">
                                 <AtSymbolIcon className="h-6 w-6 mr-1 md:text-white"/>
                                 <input
                                     type='text'
-                                    className='w-full border-b-4 bg-transparent placeholder-gray-700  outline-none focus:outline-none md:text-white'
+                                    className='w-full text-xl border-b-4 bg-transparent placeholder-gray-700  outline-none focus:outline-none md:text-white'
                                     id='email'
                                     name='email'
                                     value={values.email}
@@ -136,7 +139,6 @@ const Login = ({t}) => {
                             <div className="flex rounded-md shadow-sm">
                                 <LockClosedIcon className="h-6 w-6 mr-1 md:text-white"/>
                                 <Input 
-                                  className='w-full border-b-4 bg-transparent outline-none placeholder-gray-700 focus:outline-none md:text-white'
                                   type={values.showPasswordd ? "text" : "password"}
                                   onChange={handleChange("password")}
                                   placeholder='Enter your password'
@@ -151,7 +153,7 @@ const Login = ({t}) => {
                                       </IconButton>
                                     </InputAdornment>
                                   }
-                                />
+                                  className='w-full text-xl border-b-4 bg-transparent outline-none placeholder-gray-700 focus:outline-none md:text-white'  />
                             </div>
                             <div className="bg-red-100 rounded-lg text-base text-red-700 mt-3">
                                 <span className=''>{validation.password && <p className='p-2'>{validation.password}</p>}</span>

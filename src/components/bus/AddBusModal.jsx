@@ -1,19 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
-import { fetchAsyncRoutes, createRoute, createRoutes, reset } from '../features/Route/routeSlice';
-import FindBUsButtonSpinner from './FindBUsButtonSpinner';
+import { createBus, createBuses,reset,fetchAsyncBuses } from '../../features/bus/busSlice';
+import { getCompanies,fetchAsyncCompanies } from '../../features/company/companySlice';
+import FindBUsButtonSpinner from '../FindBUsButtonSpinner';
 import Swal from 'sweetalert2';
 
-const AddRouteModal = () => {
+const AddCompanyModal = () => {
   const [showModal, setShowModal] = useState(false);
   const firstRender = useRef(true);
-  const [source, setSource] = useState('');
-  const [destination, setDestination] = useState('');
-  const [distance, setDistance] = useState('');
-  const [sourceError, setSourceError] = useState(null);
-  const [destinationError, setDestinationError] = useState(null);
-  const [distanceError, setDistanceError] = useState(null);
-  const [inputList, setInputList] = useState([{busStop:""}]);
+  const [plate, setPlate] = useState('');
+  const [category, setCategory] = useState('');
+  const [seat, setSeat] = useState('');
+  const [status, setStatus] = useState('');
+  const [company, setCompany] = useState('');
+  const [companyError, setCompanyError] = useState(null);
+  const [plateError, setPlateError] = useState(null);
+  const [categoryError, setCategoryError] = useState(null);
+  const [seatError, setSeatError] = useState(null);
+  const [statusError, setStatusError] = useState(null);
+  const { companies } = useSelector(getCompanies);
 
   const buttonSpinnerClass =
     'focus:outline-none transition duration-150 ease-in-out bg-cyan-700 text-white bg-white rounded text-cyan-700 font-bold px-8 py-2 text-sm bg-opacity-[80%]';
@@ -22,32 +27,12 @@ const AddRouteModal = () => {
   const [disable, setDisabled] = useState(true);
 
   const { isLoading,isSuccess, isRejected, message } = useSelector(
-    (state) => state.routes
+    (state) => state.buses
   )
-
-  const handleChange = (index, e)=>{
-    
-    const { value } = e.target;
-    const list = [...inputList];
-    list[index] = value;
-    setInputList(list);
-}
-  const addInputField = (e)=>{
-    e.preventDefault();
-    setInputList([...inputList, {
-        busStop:'',
-    } ])
-  }
-
-  const removeInputFields = (index)=>{
-    const rows = [...inputList];
-    rows.splice(index, 1);
-    setInputList(rows);
-  }
-
 
 
   useEffect(() => {
+    dispatch(fetchAsyncCompanies());
     if (firstRender.current) {
       firstRender.current = false;
       return;
@@ -55,42 +40,42 @@ const AddRouteModal = () => {
     if (isSuccess) {
       setShowModal(false)
       Swal.fire(`${message.message}`, '', 'success');
-      dispatch(fetchAsyncRoutes());
+      dispatch(fetchAsyncBuses());
       dispatch(reset())
     }else if (isRejected) {
       setShowModal(false);
       Swal.fire(`${message}`, '', 'error');
-      dispatch(reset())
     }
     setDisabled(formValidation());
-    dispatch(createRoutes);
-  }, [source, destination, distance,isSuccess,isRejected]);
+    dispatch(createBuses);
+    
+  }, [plate, category, seat, status,isSuccess,isRejected]);
 
   const formValidation = () => {
-    if (source === '') {
-      setSourceError('Source cant be blank!');
+    if (plate === '') {
+      setPlateError('plate cant be blank!');
       return true;
-    } else if (destination === '') {
-      setDestinationError('Distance cant be blank!');
+    } else if (category === '') {
+      setCategoryError('category cant be blank!');
       return true;
-    } else if (isNaN(distance)) {
-      setDistanceError('Only Number Allowed!');
-      setDistance('');
-      return true;
-    } else {
-      setSourceError(null);
-      setDestinationError(null);
-      setDistanceError(null);
+    }else if (seat === '') {
+        setSeatError('seat cant be blank!');
+        return true;
+    }else {
+      setPlateError(null);
+      setCategoryError(null);
+      setSeatError(null);
       return false;
     }
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(createRoute({ source, destination, distance, busStop:inputList }));
-    setSource('');
-    setDestination('');
-    setDistance('');
+    dispatch(createBus({ plate, category, seat, company}));
+    console.log(company);
+    setPlate('');
+    setCategory('');
+    setSeat('');
   };
 
   return (
@@ -112,7 +97,7 @@ const AddRouteModal = () => {
             clip-rule="evenodd"
           />
         </svg>
-        New Route
+        New Bus
       </button>
       {showModal ? (
         <>
@@ -120,13 +105,13 @@ const AddRouteModal = () => {
             <div className="relative w-full my-6 mx-auto max-w-3xl">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="relative py-8 px-5 md:px-10 bg-white shadow-md rounded border border-gray-400">
-                  <h1>ADD NEW ROUTE</h1>
+                  <h1>ADD NEW BUS</h1>
                   <form onSubmit={onSubmit}>
                     <label
-                      for="exampleEmail0"
+                      for="plate"
                       className="form-label inline-block mb-2 text-gray-700"
                     >
-                      Source
+                      Plate number
                     </label>
                     <input
                       type="text"
@@ -147,24 +132,23 @@ const AddRouteModal = () => {
                               m-0
                               focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
                           "
-                      placeholder="Enter source"
-                      name="source"
-                      id="source"
-                      value={source}
-                      onChange={(e) => setSource(e.target.value)}
+                      placeholder="Enter Plate number"
+                      name="plate"
+                      id="plate"
+                      value={plate}
+                      onChange={(e) => setPlate(e.target.value)}
                     />
-                    {sourceError && (
-                      <p className="text-rose-600">{sourceError}</p>
+                    {plateError && (
+                      <p className="text-rose-600">{plateError}</p>
                     )}
 
                     <label
-                      for="exampleEmail0"
+                      for="category"
                       className="form-label inline-block mb-2 text-gray-700"
                     >
-                      Destination
+                      category
                     </label>
-                    <input
-                      type="text"
+                    <select
                       className="
                               form-control
                               block
@@ -182,23 +166,24 @@ const AddRouteModal = () => {
                               m-0
                               focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
                           "
-                      placeholder="Enter Destination"
-                      name="destination"
-                      id="destination"
-                      value={destination}
-                      onChange={(e) => setDestination(e.target.value)}
-                    />
-                    {destinationError && (
-                      <p className="text-rose-600">{destinationError}</p>
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                    >
+                      <option value={null}>select category</option>
+                        <option value='Coaster'>Coaster</option>
+                        <option value='Yutong'>Yutong</option>
+                    </select>
+                    {categoryError && (
+                      <p className="text-rose-600">{categoryError}</p>
                     )}
                     <label
-                      for="exampleEmail0"
+                      for="seat"
                       className="form-label inline-block mb-2 text-gray-700"
                     >
-                      Distance
+                      Number of Seats
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       className="
                               form-control
                               block
@@ -216,76 +201,50 @@ const AddRouteModal = () => {
                               m-0
                               focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
                           "
-                      placeholder="Enter Distance"
-                      name="distance"
-                      id="distance"
-                      value={distance}
-                      onChange={(e) => setDistance(Number(e.target.value))}
+                      placeholder="Enter seat number"
+                      name="seat"
+                      id="seat"
+                      value={seat}
+                      onChange={(e) => setSeat(e.target.value)}
                     />
-                    {distanceError && (
-                      <p className="text-rose-600">{distanceError}</p>
+                    {seatError && (
+                      <p className="text-rose-600">{seatError}</p>
                     )}
                     <label
-                      for="exampleEmail0"
+                      for="company"
                       className="form-label inline-block mb-2 text-gray-700"
                     >
-                      Bus Stop
+                      Company
                     </label>
-                    <div className='flex flex-row'>
-                      <div>
-                      {
-                        inputList.map((data, index)=>{
-                            const {stop}= data;
-                            return(
-                              <div className="row my-3 flex flex-row" key={index}>
-                                <div className="col">
-                                  <div className="form-group">
-                                    <input
-                                      type="text"
-                                      className="
-                                              form-control
-                                              block
-                                              w-full
-                                              px-3
-                                              py-1.5
-                                              text-base
-                                              font-normal
-                                              text-gray-700
-                                              bg-white bg-clip-padding
-                                              border border-solid border-gray-300
-                                              rounded
-                                              transition
-                                              ease-in-out
-                                              m-0
-                                              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-                                          "
-                                      name="busStop"
-                                      id="busstop"
-                                      value={stop}
-                                      onChange={(e)=>handleChange(index, e)} 
-                                      placeholder="Enter Bus stop"
-                                    />
-                                  </div>
-                                </div>
-                              
-                                <div className="w-1/12 ml-2.5">
-                                  {(inputList.length!==1)? <button className="bg-white text-red-700 w-full border-none" onClick={removeInputFields}>x</button>:''}
-                                </div>
-                              </div>
-                                        )
-                            })
-                        }
-                      </div>
-                      <div className="w-2/12">
-                            <div className="col-sm-12">
-                              <button className="mt-2.5 bg-white border-none" onClick={(e)=>addInputField(e)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-cyan-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                              </button>
-                            </div>
-                      </div>
-                    </div>
+                    <select
+                      className="
+                              form-control
+                              block
+                              w-full
+                              px-3
+                              py-1.5
+                              text-base
+                              font-normal
+                              text-gray-700
+                              bg-white bg-clip-padding
+                              border border-solid border-gray-300
+                              rounded
+                              transition
+                              ease-in-out
+                              m-0
+                              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+                          "
+                        value={company}
+                        onChange={(e) => setCompany(e.target.value)}
+                    >
+                      <option value={null}>select company</option>
+                      {companies.map((comp) => (
+                        <option key={comp.id} value={comp.id}>
+                          {comp.name}
+                        </option>
+                      ))}
+                    </select>
+                   
                     <div className="flex items-center justify-start w-full mt-8">
                        {isLoading ? (
                         <FindBUsButtonSpinner style={buttonSpinnerClass} />
@@ -295,7 +254,7 @@ const AddRouteModal = () => {
                           className="focus:outline-none transition duration-150 ease-in-out hover:bg-cyan-700 hover:text-white bg-white rounded text-cyan-700 font-bold px-8 py-2 text-sm"
                           disabled={disable}
                         >
-                          Add Route
+                          Add Company
                         </button>
                        )}
                       <button
@@ -331,4 +290,4 @@ const AddRouteModal = () => {
   );
 };
 
-export default AddRouteModal;
+export default AddCompanyModal;

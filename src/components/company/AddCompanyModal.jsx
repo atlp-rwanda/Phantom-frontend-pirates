@@ -1,99 +1,65 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { addEmployee } from "../features/Employees/EmployeeSlice";
-import { fetchAsyncRoles, getRoles } from "../features/Roles/RoleSlice";
-import FindBUsButtonSpinner from "./FindBUsButtonSpinner";
+import React, { useState, useEffect, useRef } from 'react';
+import { useSelector,useDispatch } from 'react-redux';
+import { createCompany, createCompanies,reset,fetchAsyncCompanies } from '../../features/company/companySlice';
+import FindBUsButtonSpinner from '../FindBUsButtonSpinner';
+import Swal from 'sweetalert2';
 
-const AddEmployeeModal = () => {
+const AddCompanyModal = () => {
   const [showModal, setShowModal] = useState(false);
   const firstRender = useRef(true);
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
-  const [option, setOption] = useState(null);
-  const [firstnameError, setFirstnameError] = useState(null);
-  const [lastnameError, setLastnameError] = useState(null);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [nameError, setNameError] = useState(null);
   const [emailError, setEmailError] = useState(null);
-  const { roles } = useSelector(getRoles);
 
   const buttonSpinnerClass =
-    "focus:outline-none transition duration-150 ease-in-out bg-cyan-700 text-white bg-white rounded text-cyan-700 font-bold px-8 py-2 text-sm bg-opacity-[80%]";
+    'focus:outline-none transition duration-150 ease-in-out bg-cyan-700 text-white bg-white rounded text-cyan-700 font-bold px-8 py-2 text-sm bg-opacity-[80%]';
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.employees
-  );
-
   const [disable, setDisabled] = useState(true);
+
+  const { isLoading,isSuccess, isRejected, message } = useSelector(
+    (state) => state.companies
+  )
+
 
   useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false;
       return;
     }
-    setDisabled(formValidation());
     if (isSuccess) {
+      setShowModal(false)
+      Swal.fire(`${message.message}`, '', 'success');
+      dispatch(fetchAsyncCompanies());
+      dispatch(reset())
+    }else if (isRejected) {
       setShowModal(false);
-      window.location.reload(false);
+      Swal.fire(`${message}`, '', 'error');
     }
-
-    dispatch(addEmployee);
-  }, [
-    firstname,
-    lastname,
-    email,
-    option,
-    isError,
-    isSuccess,
-    message,
-    navigate,
-  ]);
-  useEffect(() => {
-    dispatch(fetchAsyncRoles());
-  }, []);
-
-  console.log(roles);
+    setDisabled(formValidation());
+    dispatch(createCompanies);
+  }, [name, email,isSuccess,isRejected]);
 
   const formValidation = () => {
-    if (firstname === "") {
-      setFirstnameError("Firstname field can't be blank!");
+    if (name === '') {
+      setNameError('name cant be blank!');
       return true;
-    } else if (lastname === "") {
-      setLastnameError("Lastname field can't be blank!");
-      return true;
-    } else if (email === "") {
-      setEmailError("Email field can't be blank!");
+    } else if (email === '') {
+      setEmailError('email cant be blank!');
       return true;
     } else {
-      setFirstnameError(null);
-      setLastnameError(null);
+      setNameError(null);
       setEmailError(null);
       return false;
     }
   };
-  const handleChange = (e) => {
-    setOption(e.target.value);
-  };
-  const refreshPage = () => {
-    window.location.reload(false);
-  };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(addEmployee({ firstname, lastname, email, option }));
-    const employeeData = {
-      firstname,
-      lastname,
-      email,
-      option,
-    };
-    dispatch(addEmployee(employeeData));
-    setFirstname("");
-    setLastname("");
-    setEmail("");
-    setOption("");
+    dispatch(createCompany({ name, email}));
+    setName('');
+    setEmail('');
   };
 
   return (
@@ -115,7 +81,7 @@ const AddEmployeeModal = () => {
             clip-rule="evenodd"
           />
         </svg>
-        New Employee
+        New Company
       </button>
       {showModal ? (
         <>
@@ -123,13 +89,13 @@ const AddEmployeeModal = () => {
             <div className="relative w-full my-6 mx-auto max-w-3xl">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="relative py-8 px-5 md:px-10 bg-white shadow-md rounded border border-gray-400">
-                  <h1>REGISTER EMPLOYEE</h1>
+                  <h1>ADD NEW COMPANY</h1>
                   <form onSubmit={onSubmit}>
                     <label
-                      for="exampleEmail0"
+                      for="name"
                       className="form-label inline-block mb-2 text-gray-700"
                     >
-                      firstname
+                      Name
                     </label>
                     <input
                       type="text"
@@ -150,58 +116,24 @@ const AddEmployeeModal = () => {
                               m-0
                               focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
                           "
-                      placeholder="Enter firstname"
-                      name="firstname"
-                      id="firstname"
-                      value={firstname}
-                      onChange={(e) => setFirstname(e.target.value)}
+                      placeholder="Enter name"
+                      name="name"
+                      id="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                     />
-                    {firstnameError && (
-                      <p className="text-rose-600">{firstnameError}</p>
+                    {nameError && (
+                      <p className="text-rose-600">{nameError}</p>
                     )}
 
                     <label
-                      for="exampleEmail0"
-                      className="form-label inline-block mb-2 text-gray-700"
-                    >
-                      lastname
-                    </label>
-                    <input
-                      type="text"
-                      className="
-                              form-control
-                              block
-                              w-full
-                              px-3
-                              py-1.5
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              m-0
-                              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-                          "
-                      placeholder="Enter lastname"
-                      name="lastname"
-                      id="lastname"
-                      value={lastname}
-                      onChange={(e) => setLastname(e.target.value)}
-                    />
-                    {lastnameError && (
-                      <p className="text-rose-600">{lastnameError}</p>
-                    )}
-                    <label
-                      for="exampleEmail0"
+                      for="email"
                       className="form-label inline-block mb-2 text-gray-700"
                     >
                       Email
                     </label>
                     <input
-                      type="text"
+                      type="email"
                       className="
                               form-control
                               block
@@ -219,7 +151,7 @@ const AddEmployeeModal = () => {
                               m-0
                               focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
                           "
-                      placeholder="Enter Email"
+                      placeholder="Enter email"
                       name="email"
                       id="email"
                       value={email}
@@ -228,38 +160,9 @@ const AddEmployeeModal = () => {
                     {emailError && (
                       <p className="text-rose-600">{emailError}</p>
                     )}
-                    <label className="font-medium">Role</label>
-                    <select
-                      className="
-                              form-control
-                              block
-                              w-full
-                              px-3
-                              py-1.5
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              m-0
-                              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-                          "
-                      value={option}
-                      onChange={handleChange}
-                    >
-                      <option value={null}>select role</option>
-                      {roles.map((role) => (
-                        <option key={role.id} value={role.id}>
-                          {role.role}
-                        </option>
-                      ))}
-                    </select>
-
+                   
                     <div className="flex items-center justify-start w-full mt-8">
-                      {isLoading ? (
+                       {isLoading ? (
                         <FindBUsButtonSpinner style={buttonSpinnerClass} />
                       ) : (
                         <button
@@ -267,13 +170,14 @@ const AddEmployeeModal = () => {
                           className="focus:outline-none transition duration-150 ease-in-out hover:bg-cyan-700 hover:text-white bg-white rounded text-cyan-700 font-bold px-8 py-2 text-sm"
                           disabled={disable}
                         >
-                          Register
+                          Add Company
                         </button>
-                      )}
+                       )}
                       <button
                         type="button"
                         onClick={() => setShowModal(false)}
                         className="ml-3 bg-Red-600 text-red-700 hover:bg-red-700 hover:text-white border-red-700 rounded px-8 py-2 text-sm"
+                        onclick="modalHandler()"
                       >
                         Cancel
                       </button>
@@ -302,4 +206,4 @@ const AddEmployeeModal = () => {
   );
 };
 
-export default AddEmployeeModal;
+export default AddCompanyModal;
