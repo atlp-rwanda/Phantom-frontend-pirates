@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Popup, Marker } from 'react-leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
 
 import Routing from './Routing';
 
@@ -28,7 +28,8 @@ const busStopData = {
         lng: 30.119027896544978
     }
 }
-const LeafMap = ({ source, destination }) => {
+
+const LeafMap = ({ source, destination, start }) => {
     const [map, setMap] = useState(null);
     const [pointA, setPointA] = useState('');
     const [pointB, setPointB] = useState('');
@@ -50,14 +51,11 @@ const LeafMap = ({ source, destination }) => {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker position={center}>
-                <Popup>
-                    Downtown Bus park
-                </Popup>
-            </Marker>
+            
             <Routing 
                 pointA={pointA} 
-                pointB={pointB} 
+                pointB={pointB}
+                start={start}
             />
             {/* <RoutingMachine 
                 pointA={pointA} 

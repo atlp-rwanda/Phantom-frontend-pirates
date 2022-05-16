@@ -1,10 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 import { ToastContainer } from 'react-toastify';
 
-import SkeletonSimulator from './SkeletonSimulator';
 import { notifyInfo, notifySuccess } from '../utils/Notifications';
 import LeafMap from './LeafMap';
 
@@ -12,13 +11,12 @@ import LeafMap from './LeafMap';
 
 const UserMap = ({ t }) => {
 
-  const [map, setMap] = useState(/** @type google.maps.ap */(null));
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [distance, setDistance] = useState('');
   const [duration, setDuration] = useState('');
   const [source, setSource] = useState('');
   const [destination, setDestination] = useState('');
-
+  const [start, setStart] = useState(false);
 
   const originRef = useRef()
   const destinationRef = useRef();
@@ -41,7 +39,7 @@ const UserMap = ({ t }) => {
 
   }
 
-  
+
   //TODO: set up a clear button
   const clearRoute = () => {
     setDirectionsResponse(null);
@@ -82,7 +80,7 @@ const UserMap = ({ t }) => {
 
       </div>
 
-      <div className="relative overflow-hidden rounded-lg grid-cols-3 grid-rows-1 shadow-2xl  lg:pb-0 grid grid-cols-1 gap-1.5 md:grid-cols-3 h-96 ">
+      <div className="relative overflow-hidden rounded-lg grid-cols-3 grid-rows-1 shadow-2xl  lg:pb-0 grid grid-cols-1 gap-1.5 md:grid-cols-3 h-auto">
         {/* Control section */}
         <div className=" p-6 bg-gray-100 rounded col-start-1">
           <div className="flex flex-col justify-start m-2 lg:m-6">
@@ -132,15 +130,6 @@ const UserMap = ({ t }) => {
 
 
           <div className="flex justify-center space-x-3 m-3">
-            <button
-              className="bg-blue-600 text-white w-10 h-10 rounded-full flex justify-center items-center"
-              data-tip="Your Location"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-            </button>
 
             <button
               className="inline-flex items-center px-8 py-3 text-white bg-indigo-600 border border-indigo-600 rounded hover:bg-transparent hover:text-indigo-600 active:text-indigo-500 focus:outline-none focus:ring"
@@ -149,20 +138,42 @@ const UserMap = ({ t }) => {
               <span className="text-sm font-medium">
                 Check Route
               </span>
-              <svg className="w-5 h-5 ml-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 ml-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
             </button>
-
           </div>
 
+          <div className="flex justify-start m-3 gap-2">
+            <button
+              data-tip="Move Bus"
+              className="bg-yellow-600 text-white w-10 h-10 rounded-full flex justify-center items-center"
+              onClick={() => setStart(true)}
+            >
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 15.707a1 1 0 010-1.414l5-5a1 1 0 011.414 0l5 5a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414 0zm0-6a1 1 0 010-1.414l5-5a1 1 0 011.414 0l5 5a1 1 0 01-1.414 1.414L10 5.414 5.707 9.707a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
+            </button>
+            <button
+              data-tip="Stop Bus"
+              className="bg-red-600 text-white w-10 h-10 rounded-full flex justify-center items-center"
+              onClick={() => setStart(false)}
+              >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+              </svg>
+            </button>
+          </div>
         </div>
 
 
         {/* Map section */}
 
         <div className="ml-auto text-center w-full col-span-2 row-span-3 col-start-2 col-span-2">
-          <LeafMap source={source} destination={destination} />
+          <LeafMap 
+            source={source} 
+            destination={destination}
+            start={start} 
+          />
         </div>
       </div>
 
