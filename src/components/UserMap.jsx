@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';

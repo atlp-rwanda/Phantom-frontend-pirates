@@ -1,8 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext, useCallback } from 'react';
 import { withTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
+import { SocketContext } from '../context/socket';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { notifyInfo, notifySuccess } from '../utils/Notifications';
@@ -19,6 +20,23 @@ const Simulation = ({ t }) => {
     const navigate = useNavigate();
     const [totalSeats, setTotalSeats] = useState(10);
     const [distance, setDistance] = useState(0)
+    const socket = useContext(SocketContext);
+
+    const handleStartBus = useCallback(() => {
+        setMoving(true);
+        socket.emit('START', {
+            busId: 'RAA 222F',
+            status: 'start'
+        });
+    }, [])
+
+    const handlePauseBus = useCallback(() => {
+        setMoving(false);
+        socket.emit('PAUSE', {
+            busId: 'RAA 222F',
+            status: 'pause'
+        });
+    },[])
 
     //TODO: change speed incrementary 
     //TODO calculate distance from speed 
@@ -267,13 +285,13 @@ const Simulation = ({ t }) => {
                                 <button
                                     data-tip="Move Bus"
                                     className="bg-yellow-600 text-white w-10 h-10 rounded-full flex justify-center items-center"
-                                    onClick={moveBus}
+                                    onClick={handleStartBus}
                                 >
                                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 15.707a1 1 0 010-1.414l5-5a1 1 0 011.414 0l5 5a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414 0zm0-6a1 1 0 010-1.414l5-5a1 1 0 011.414 0l5 5a1 1 0 01-1.414 1.414L10 5.414 5.707 9.707a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
                                 </button>
                                 <button
                                     data-tip="Stop Bus"
-                                    className="bg-red-600 text-white w-10 h-10 rounded-full flex justify-center items-center" onClick={stopBus}>
+                                    className="bg-red-600 text-white w-10 h-10 rounded-full flex justify-center items-center" onClick={handlePauseBus}>
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
                                     </svg>

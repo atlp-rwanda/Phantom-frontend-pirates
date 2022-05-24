@@ -1,0 +1,3 @@
+.leaflet-marker-pane > :first-child{
+    display: none;
+  }
