@@ -1,80 +1,66 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
-import { createRoute, createRoutes } from '../features/Route/routeSlice';
-import FindBUsButtonSpinner from './FindBUsButtonSpinner';
-import { useNavigate } from 'react-router-dom'
+import { createCompany, createCompanies,reset,fetchAsyncCompanies } from '../../features/company/companySlice';
+import FindBUsButtonSpinner from '../FindBUsButtonSpinner';
+import Swal from 'sweetalert2';
 
-const AddRouteModal = () => {
+const AddCompanyModal = () => {
   const [showModal, setShowModal] = useState(false);
-  //const [isLoading, setIsLoading] = useState(false);
   const firstRender = useRef(true);
-  const [source, setSource] = useState('');
-  const [destination, setDestination] = useState('');
-  const [distance, setDistance] = useState('');
-  const [busStop, setbusStop] = useState([]);
-  const [sourceError, setSourceError] = useState(null);
-  const [destinationError, setDestinationError] = useState(null);
-  const [distanceError, setDistanceError] = useState(null);
-  const [busStopError, setbusStopError] = useState(null);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [nameError, setNameError] = useState(null);
+  const [emailError, setEmailError] = useState(null);
 
   const buttonSpinnerClass =
     'focus:outline-none transition duration-150 ease-in-out bg-cyan-700 text-white bg-white rounded text-cyan-700 font-bold px-8 py-2 text-sm bg-opacity-[80%]';
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   const [disable, setDisabled] = useState(true);
 
-  const { isLoading,isSuccess } = useSelector(
-    (state) => state.routes
+  const { isLoading,isSuccess, isRejected, message } = useSelector(
+    (state) => state.companies
   )
-  
+
+
   useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false;
       return;
     }
     if (isSuccess) {
-      //
-      
       setShowModal(false)
-      window.location.reload(true);
+      Swal.fire(`${message.message}`, '', 'success');
+      dispatch(fetchAsyncCompanies());
+      dispatch(reset())
+    }else if (isRejected) {
+      setShowModal(false);
+      Swal.fire(`${message}`, '', 'error');
+      dispatch(reset())
     }
     setDisabled(formValidation());
-    dispatch(createRoutes);
-  }, [source, destination, distance, busStop,isSuccess]);
+    dispatch(createCompanies);
+  }, [name, email,isSuccess,isRejected]);
 
   const formValidation = () => {
-    if (source === '') {
-      setSourceError('Source cant be blank!');
+    if (name === '') {
+      setNameError('name cant be blank!');
       return true;
-    } else if (destination === '') {
-      setDestinationError('Distance cant be blank!');
-      return true;
-    } else if (isNaN(distance)) {
-      setDistanceError('Only Number Allowed!');
-      setDistance('');
-      return true;
-    } else if (busStop.length === 0) {
-      setbusStopError('busStop cant be blank!');
-      
+    } else if (email === '') {
+      setEmailError('email cant be blank!');
       return true;
     } else {
-      setSourceError(null);
-      setDestinationError(null);
-      setDistanceError(null);
-      setbusStopError(null);
+      setNameError(null);
+      setEmailError(null);
       return false;
     }
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(createRoute({ source, destination, distance, busStop }));
-    setSource('');
-    setDestination('');
-    setDistance('');
-    setbusStop('');
+    dispatch(createCompany({ name, email}));
+    setName('');
+    setEmail('');
   };
 
   return (
@@ -96,7 +82,7 @@ const AddRouteModal = () => {
             clip-rule="evenodd"
           />
         </svg>
-        New Route
+        New Company
       </button>
       {showModal ? (
         <>
@@ -104,13 +90,13 @@ const AddRouteModal = () => {
             <div className="relative w-full my-6 mx-auto max-w-3xl">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="relative py-8 px-5 md:px-10 bg-white shadow-md rounded border border-gray-400">
-                  <h1>ADD NEW ROUTE</h1>
+                  <h1>ADD NEW COMPANY</h1>
                   <form onSubmit={onSubmit}>
                     <label
-                      for="exampleEmail0"
+                      for="name"
                       className="form-label inline-block mb-2 text-gray-700"
                     >
-                      Source
+                      Name
                     </label>
                     <input
                       type="text"
@@ -131,24 +117,24 @@ const AddRouteModal = () => {
                               m-0
                               focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
                           "
-                      placeholder="Enter source"
-                      name="source"
-                      id="source"
-                      value={source}
-                      onChange={(e) => setSource(e.target.value)}
+                      placeholder="Enter name"
+                      name="name"
+                      id="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                     />
-                    {sourceError && (
-                      <p className="text-rose-600">{sourceError}</p>
+                    {nameError && (
+                      <p className="text-rose-600">{nameError}</p>
                     )}
 
                     <label
-                      for="exampleEmail0"
+                      for="email"
                       className="form-label inline-block mb-2 text-gray-700"
                     >
-                      Destination
+                      Email
                     </label>
                     <input
-                      type="text"
+                      type="email"
                       className="
                               form-control
                               block
@@ -166,86 +152,18 @@ const AddRouteModal = () => {
                               m-0
                               focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
                           "
-                      placeholder="Enter Destination"
-                      name="destination"
-                      id="destination"
-                      value={destination}
-                      onChange={(e) => setDestination(e.target.value)}
+                      placeholder="Enter email"
+                      name="email"
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
-                    {destinationError && (
-                      <p className="text-rose-600">{destinationError}</p>
+                    {emailError && (
+                      <p className="text-rose-600">{emailError}</p>
                     )}
-                    <label
-                      for="exampleEmail0"
-                      className="form-label inline-block mb-2 text-gray-700"
-                    >
-                      Distance
-                    </label>
-                    <input
-                      type="text"
-                      className="
-                              form-control
-                              block
-                              w-full
-                              px-3
-                              py-1.5
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              m-0
-                              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-                          "
-                      placeholder="Enter Distance"
-                      name="distance"
-                      id="distance"
-                      value={distance}
-                      onChange={(e) => setDistance(Number(e.target.value))}
-                    />
-                    {distanceError && (
-                      <p className="text-rose-600">{distanceError}</p>
-                    )}
-                    <label
-                      for="exampleEmail0"
-                      className="form-label inline-block mb-2 text-gray-700"
-                    >
-                      Bus Stop
-                    </label>
-                    <input
-                      type="text"
-                      className="
-                              form-control
-                              block
-                              w-full
-                              px-3
-                              py-1.5
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              m-0
-                              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-                          "
-                      name="busStop"
-                      id="busStop"
-                      value={busStop}
-                      onChange={(e) => setbusStop([e.target.value])}
-                      placeholder="Enter Bus stop"
-                    />
-                    {busStopError && (
-                      <p className="text-rose-600">{busStopError}</p>
-                    )}
-
+                   
                     <div className="flex items-center justify-start w-full mt-8">
-                      {isLoading  ? (
+                       {isLoading ? (
                         <FindBUsButtonSpinner style={buttonSpinnerClass} />
                       ) : (
                         <button
@@ -253,9 +171,9 @@ const AddRouteModal = () => {
                           className="focus:outline-none transition duration-150 ease-in-out hover:bg-cyan-700 hover:text-white bg-white rounded text-cyan-700 font-bold px-8 py-2 text-sm"
                           disabled={disable}
                         >
-                          Add Route
+                          Add Company
                         </button>
-                      )}
+                       )}
                       <button
                         type="button"
                         onClick={() => setShowModal(false)}
@@ -289,4 +207,4 @@ const AddRouteModal = () => {
   );
 };
 
-export default AddRouteModal;
+export default AddCompanyModal;

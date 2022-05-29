@@ -6,6 +6,7 @@ import dirver from '../images/truck-driver.svg';
 import bus from '../images/bus-alt.svg';
 import home from '../images/home.svg';
 import road from '../images/road.svg';
+import company from '../images/location-company-filled.svg'
 import { logout, reset } from '../features/auth/authSlice';
 function SlideBar() {
   const navigate = useNavigate()
@@ -32,11 +33,17 @@ function SlideBar() {
                   <p className="text-base leading-4 ">Dashboard</p>
                 </button>
                 <button className="focus:outline-none flex jusitfy-start hover:text-white bg-white border-none hover:bg-cyan-700 text-gray-600 rounded py-3 pl-4  items-center w-full  space-x-6">
+                <img src={company} alt="/" className="w-8" />
+                <p className="text-base leading-4  ">
+                  <Link to="/company">Companies</Link>
+                  </p>
+                </button>
+                <button className="focus:outline-none flex jusitfy-start hover:text-white bg-white border-none hover:bg-cyan-700 text-gray-600 rounded py-3 pl-4  items-center w-full  space-x-6">
                 <img src={bus} alt="/" className="w-8" />
                   <p className="text-base leading-4 ">Buses</p>
                 </button>
                 <button className="focus:outline-none flex justify-start items-center space-x-6 hover:text-white bg-white border-none hover:bg-cyan-700 text-gray-600 rounded  py-3 pl-4  w-full ">
-                  <img src={dirver} alt="/" className="w-10" />
+                  <img src={dirver} alt="/" className="w-8" />
                   <p className="text-base leading-4  ">Drivers</p>
                 </button>
                 <button className="flex justify-start items-center space-x-6 hover:text-white focus:outline-none focus:bg-indigo-700 focus:text-white bg-white border-none hover:bg-cyan-700 text-gray-600 rounded py-3 pl-4  w-full ">

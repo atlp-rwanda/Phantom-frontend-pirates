@@ -505,7 +505,8 @@ function RouteTable() {
                               <div className="row my-3 flex flex-row" key={index}>
                                 <div className="col">
                                   <div className="form-group">
-                                    <input
+                                    { routeBusStop.map((bustop, index)=> (
+                                      <input
                                       type="text"
                                       className="
                                               form-control
@@ -526,10 +527,13 @@ function RouteTable() {
                                           "
                                       name="busStop"
                                       id="busstop"
-                                      value={routeBusStop}
+                                      value={bustop}
                                       onChange={(e)=>handleChange(index, e)} 
                                       placeholder="Enter Bus stop"
                                     />
+                                    ))
+                                    }
+                                    
                                   </div>
                                 </div>
                               
