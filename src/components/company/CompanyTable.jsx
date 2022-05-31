@@ -17,11 +17,7 @@ function CompanyTable() {
  
    const { companies } = useSelector(getCompanies);
  
-<<<<<<< HEAD
    const { isLoading,isSuccessCompDelete, isSuccess,message } = useSelector(
-=======
-   const { isLoading,isSuccessCompDelete, isSuccess } = useSelector(
->>>>>>> ft-crud-route: add design
      (state) => state.companies
    )
   
@@ -70,11 +66,7 @@ function CompanyTable() {
      if(isSuccess)
      {
        setUpdateCompModal(false)
-<<<<<<< HEAD
        Swal.fire(`${message.message}`, '', 'success');
-=======
-       Swal.fire('Successfully updated', '', 'success');
->>>>>>> ft-crud-route: add design
      }
     
    };
@@ -85,11 +77,7 @@ function CompanyTable() {
      dispatch(fetchAsyncCompanies());
      if (isSuccessCompDelete) {
        setDeleteCompModal(false)
-<<<<<<< HEAD
        Swal.fire(`${message.message}`, '', 'success');
-=======
-       Swal.fire('deleted', '', 'success');
->>>>>>> ft-crud-route: add design
        dispatch(reset())
      }
     
@@ -298,11 +286,7 @@ function CompanyTable() {
                          <div className="relative w-full my-6 mx-auto max-w-3xl">
                            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                              <div className="relative py-8 px-5 md:px-10 bg-white shadow-md rounded border border-gray-400">
-<<<<<<< HEAD
-                               <h1>UPDATE ROUTE <span className='text-xl font-bold'> {companyName}</span></h1>
-=======
                                <h1>UPDATE Company <span className='text-xl font-bold'> {companyName}</span></h1>
->>>>>>> ft-crud-route: add design
                                <form onSubmit={onSubmit}>
                                <label
                      for="exampleEmail0"
