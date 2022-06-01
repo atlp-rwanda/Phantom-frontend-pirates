@@ -39,7 +39,6 @@ const LeafMap = ({ source, destination, start }) => {
       setPointB(busStopData[destination])
 
     }, [source, destination])
-
     return (
         <MapContainer
             center={center}
