@@ -1,22 +1,11 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { logout, reset } from "../features/auth/authSlice";
-import logo from "../images/logo.png";
-import { MenuIcon, XIcon } from "@heroicons/react/outline";
-import SelectLanguage from "./SelectLanguage";
-import { withTranslation } from "react-i18next";
+import React, { useState } from 'react';
+import { withTranslation } from 'react-i18next';
+import logo from '../images/logo.png';
+import { MenuIcon, XIcon } from '@heroicons/react/outline';
+import SelectLanguage from './SelectLanguage';
+import { Link } from 'react-router-dom';
 
 function Navbar({t}) {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-  const onLogout = () => {
-    dispatch(logout());
-    dispatch(reset());
-    navigate("/");
-  };
-
   const [dropDownMenu, setUpDropDown] = useState(false);
   const [language, setLanguage] = useState("ENG");
 
@@ -40,22 +29,11 @@ function Navbar({t}) {
               </ul>
             </div>
             <div className="hidden md:flex h-[30px] pr-[70px]">
-            {user ? (
-                <button
-                  onClick={onLogout}
-                  className="w-[90px] border-white text-whte bg-red-700 hover:bg-button-color hover:text-white hover:border-none"
-                >
-                  {t("navbar.signOut")}
-                </button>
-              ) : (
-                <>
-                  <button className="w-[90px] border-white text-white bg-cyan-700 hover:bg-button-color hover:text-white hover:border-none">
-                  <Link to='/login'>
-                  <a>{t('navbar.signIn')}</a>
-                  </Link>
-                  </button>
-                </>
-              )}
+              <button className="w-[90px] border-button-color border-fon text-white bg-transparent hover:bg-button-color hover:text-white hover:border-none">
+                <Link to='/login'>
+                <a>{t('navbar.signIn')}</a>
+                </Link>
+              </button>
               <div className="px-10">
                 <SelectLanguage />
               </div>
@@ -88,20 +66,9 @@ function Navbar({t}) {
           </div>
         </div>
         <div className="flex my-5 mx-9">
-        {user ? (
-            <button
-              onClick={onLogout}
-              className="h-[40px] w-full  text-whte bg-red-700 hover:bg-button-color hover:text-white hover:border-none"
-            >
-              {t("navbar.signOut")}
-            </button>
-          ) : (
-            <>
-              <button className="h-[40px] w-full text-yellow-400 bg-cyan-700 hover:bg-button-color hover:text-white hover:border-none">
-                {t("navbar.signIn")}
-              </button>
-            </>
-          )}
+          <button className="h-[40px] w-full hover:bg-opacity-75">
+          {t('navbar.signIn')}
+          </button>
         </div>
       </ul>
     </div>

@@ -1,6 +1,4 @@
-import React from "react";
-import { useNavigate, Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import logo from '../images/logo.png';
 import dirver from '../images/truck-driver.svg';
 import bus from '../images/bus-alt.svg';
@@ -85,4 +83,4 @@ function SlideBar() {
   )
 }
 
-export default SlideBar
+export default SlideBar;
