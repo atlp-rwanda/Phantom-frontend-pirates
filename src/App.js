@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,11 +14,13 @@ import Rout from './container/Routes';
 import Company from './container/Company';
 import Bus from './container/Bus';
 import { Simulation, UserMap } from './components';
+import { SocketContext, socket } from './context/socket';
 
 const App = () => {
   return (
     <div>
       <React.StrictMode>
+      <SocketContext.Provider value={socket}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/viewBus" element={<ViewBus />} />
@@ -35,6 +37,7 @@ const App = () => {
           <Route path='/user-map' element={<UserMap />} />
         </Routes>
         <ToastContainer />
+        </SocketContext.Provider>
       </React.StrictMode>
     </div>
   );
